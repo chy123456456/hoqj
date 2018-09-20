@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="SubmitMsgCustomer">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="scode" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="bizid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senddt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sysid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="keys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfString">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="string" nillable="true" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SubmitMsgCustomerResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitMsgCustomerResult" type="tns:WebApiResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="WebApiResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="state" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="taskcode" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="reason" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="SubmitMsgEmp">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="empid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="bizid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senddt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sysid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="keys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitMsgEmpResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitMsgEmpResult" type="tns:WebApiResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitMsgSimple">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cellphone" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="bizid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="senddt" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="sysid" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="keys" type="tns:ArrayOfString" />
+            <s:element minOccurs="0" maxOccurs="1" name="values" type="tns:ArrayOfString" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SubmitMsgSimpleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SubmitMsgSimpleResult" type="tns:WebApiResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="SubmitMsgCustomerSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitMsgCustomer" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMsgCustomerSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitMsgCustomerResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMsgEmpSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitMsgEmp" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMsgEmpSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitMsgEmpResponse" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMsgSimpleSoapIn">
+    <wsdl:part name="parameters" element="tns:SubmitMsgSimple" />
+  </wsdl:message>
+  <wsdl:message name="SubmitMsgSimpleSoapOut">
+    <wsdl:part name="parameters" element="tns:SubmitMsgSimpleResponse" />
+  </wsdl:message>
+  <wsdl:portType name="MsgTaskServiceSoap">
+    <wsdl:operation name="SubmitMsgCustomer">
+      <wsdl:input message="tns:SubmitMsgCustomerSoapIn" />
+      <wsdl:output message="tns:SubmitMsgCustomerSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgEmp">
+      <wsdl:input message="tns:SubmitMsgEmpSoapIn" />
+      <wsdl:output message="tns:SubmitMsgEmpSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgSimple">
+      <wsdl:input message="tns:SubmitMsgSimpleSoapIn" />
+      <wsdl:output message="tns:SubmitMsgSimpleSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MsgTaskServiceSoap" type="tns:MsgTaskServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SubmitMsgCustomer">
+      <soap:operation soapAction="http://tempuri.org/SubmitMsgCustomer" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgEmp">
+      <soap:operation soapAction="http://tempuri.org/SubmitMsgEmp" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgSimple">
+      <soap:operation soapAction="http://tempuri.org/SubmitMsgSimple" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="MsgTaskServiceSoap12" type="tns:MsgTaskServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SubmitMsgCustomer">
+      <soap12:operation soapAction="http://tempuri.org/SubmitMsgCustomer" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgEmp">
+      <soap12:operation soapAction="http://tempuri.org/SubmitMsgEmp" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SubmitMsgSimple">
+      <soap12:operation soapAction="http://tempuri.org/SubmitMsgSimple" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MsgTaskService">
+    <wsdl:port name="MsgTaskServiceSoap" binding="tns:MsgTaskServiceSoap">
+      <soap:address location="http://192.168.1.104:7002/MsgTaskService.asmx" />
+    </wsdl:port>
+    <wsdl:port name="MsgTaskServiceSoap12" binding="tns:MsgTaskServiceSoap12">
+      <soap12:address location="http://192.168.1.104:7002/MsgTaskService.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

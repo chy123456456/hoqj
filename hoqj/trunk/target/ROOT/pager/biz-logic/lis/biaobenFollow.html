@@ -1,0 +1,44 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>标本跟踪</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+               <form onsubmit="return false;" id="queryForm" class="form_style">
+					<span class="spacing"><label>申请单号：</label><input type="text" name="sqdq" style="width: 120px" id="sqdq"/></span> 
+					<span class="spacing"><label>患者姓名：</label><input type="text" name="hzq" style="width: 120px" id="hzq"/></span>
+					<span class="spacing"><label>住院号：</label><input type="text" name="zyhq" style="width: 120px" id="zyhq"/></span> 
+					<span class="spacing"><input type="submit" id="queryButton" value="查询" /></span>
+				</form>
+            </div>
+        </div>
+        <table id="grid"   title="标本列表">
+            <thead>
+                <th data-options="field:'c_id',width:40,resizable:true,align:'left'">条码号</th>
+				<th data-options="field:'c_zyh',width:40,resizable:true,align:'left'">住院号</th>
+				<th data-options="field:'c_name',width:40,resizable:true,align:'left'">患者姓名</th>
+				<th data-options="field:'c_itemname',width:40,resizable:true,align:'left'">检验医嘱</th>
+				<th data-options="field:'kddoctor',width:30,resizable:true,align:'left'">开单医生</th>
+				<th data-options="field:'c_kd_date',width:50,resizable:true,align:'left'">开单时间</th>
+				<th data-options="field:'c_bbcj_opname',width:30,resizable:true,align:'left'">采集人</th>
+				<th data-options="field:'c_bbcj_date',width:50,resizable:true,align:'left'">采集时间</th>
+				<th data-options="field:'c_bbsj_name',width:30,resizable:true,align:'left'">送检人</th>
+				<th data-options="field:'c_bbsj_date',width:50,resizable:true,align:'left'">送检时间</th>
+				<th data-options="field:'incepter',width:30,resizable:true,align:'left'">签收人</th>
+				<th data-options="field:'inceptTime',width:50,resizable:true,align:'left'">签收时间</th>
+				<th data-options="field:'Technician',width:30,resizable:true,align:'left'">核收人</th>
+				<th data-options="field:'ReceiveTime',width:50,resizable:true,align:'left'">核收时间</th>
+				<th data-options="field:'Checker',width:30,resizable:true,align:'left'">审核人</th>
+				<th data-options="field:'ReceiveDate1',width:50,resizable:true,align:'left'">审核时间</th>
+            </thead>
+        </table>
+    </div>
+</body>
+</html>
+</@compress>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.CostItemYearMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.CostItemYear" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="INTEGER" />
+    <result column="item_id" property="itemId" jdbcType="INTEGER" />
+    <result column="cost" property="cost" jdbcType="DECIMAL" />
+    <result column="year" property="year" jdbcType="VARCHAR" />
+    <result column="creater_id" property="createrId" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updater_id" property="updaterId" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dept_id, item_id, cost, year, creater_id, creater, create_time, updater_id, updater, 
+    update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_cost_item_year
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_cost_item_year
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.keng.main.entity.CostItemYear" >
+    insert into tb_cost_item_year (id, dept_id, item_id, 
+      cost, year, creater_id, 
+      creater, create_time, updater_id, 
+      updater, update_time)
+    values (#{id,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{itemId,jdbcType=INTEGER}, 
+      #{cost,jdbcType=DECIMAL}, #{year,jdbcType=VARCHAR}, #{createrId,jdbcType=VARCHAR}, 
+      #{creater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updaterId,jdbcType=VARCHAR}, 
+      #{updater,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.CostItemYear" >
+    insert into tb_cost_item_year
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="itemId != null" >
+        item_id,
+      </if>
+      <if test="cost != null" >
+        cost,
+      </if>
+      <if test="year != null" >
+        year,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null" >
+        #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.CostItemYear" >
+    update tb_cost_item_year
+    <set >
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="itemId != null" >
+        item_id = #{itemId,jdbcType=INTEGER},
+      </if>
+      <if test="cost != null" >
+        cost = #{cost,jdbcType=DECIMAL},
+      </if>
+      <if test="year != null" >
+        year = #{year,jdbcType=VARCHAR},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.CostItemYear" >
+    update tb_cost_item_year
+    set dept_id = #{deptId,jdbcType=INTEGER},
+      item_id = #{itemId,jdbcType=INTEGER},
+      cost = #{cost,jdbcType=DECIMAL},
+      year = #{year,jdbcType=VARCHAR},
+      creater_id = #{createrId,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      updater_id = #{updaterId,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

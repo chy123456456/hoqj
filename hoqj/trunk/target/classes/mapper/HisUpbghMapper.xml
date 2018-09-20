@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.HisUpbghMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.HisUpbgh" >
+    <result column="c_id" property="id" jdbcType="VARCHAR" />
+    <result column="c_dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="c_doctor_id" property="doctorId" jdbcType="VARCHAR" />
+    <result column="c_date" property="date" jdbcType="TIMESTAMP" />
+    <result column="c_gh_type" property="ghType" jdbcType="VARCHAR" />
+    <result column="c_gh_bc" property="ghBc" jdbcType="VARCHAR" />
+    <result column="c_dept_zs" property="deptZs" jdbcType="VARCHAR" />
+    <result column="c_begin_date" property="beginDate" jdbcType="TIMESTAMP" />
+    <result column="c_end_date" property="endDate" jdbcType="TIMESTAMP" />
+    <result column="c_num_plan" property="numPlan" jdbcType="INTEGER" />
+    <result column="c_num" property="num" jdbcType="INTEGER" />
+    <result column="c_num_xh" property="numXh" jdbcType="INTEGER" />
+    <result column="c_op_date" property="opDate" jdbcType="TIMESTAMP" />
+    <result column="c_op_name" property="opName" jdbcType="VARCHAR" />
+    <result column="c_date_sno" property="dateSno" jdbcType="INTEGER" />
+    <result column="c_yy_num" property="yyNum" jdbcType="DECIMAL" />
+    <result column="c_yy_count" property="yyCount" jdbcType="DECIMAL" />
+    <result column="c_yy_xh" property="yyXh" jdbcType="DECIMAL" />
+    <result column="c_yy_yg" property="yyYg" jdbcType="DECIMAL" />
+    <result column="sources_system_id" property="sourcesSystemId" jdbcType="VARCHAR" />
+    <result column="visit_no" property="visitNo" jdbcType="VARCHAR" />
+    <result column="schedule_occasion" property="scheduleOccasion" jdbcType="VARCHAR" />
+    <result column="clinic_label" property="clinicLabel" jdbcType="VARCHAR" />
+    <result column="c_status" property="status" jdbcType="VARCHAR" />
+    <result column="c_reg_id" property="regId" jdbcType="VARCHAR" />
+    <result column="c_jz_status" property="jzStatus" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="selectByCondititon" resultMap="BaseResultMap" parameterType="com.keng.main.entity.HisUpbgh" >
+    select * from u_pb_gh where 1=1 
+    <if test="deptId != null">
+    	AND c_dept_id = #{deptId,jdbcType=VARCHAR}
+    </if>
+    <if test="doctorId != null">
+    	AND c_doctor_id = #{doctorId,jdbcType=VARCHAR}
+    </if>
+    <if test="bDate != null">
+    	<![CDATA[AND c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="status != null">
+    	AND c_status = #{status,jdbcType=VARCHAR}
+    </if>
+  </select>
+  <select id="getDeptsByTime" resultType="com.keng.main.entity.SysDept" parameterType="com.keng.main.entity.HisUpbgh">
+  	SELECT DISTINCT
+		u_pb_gh.c_dept_id id,
+		p_deptemp.c_name name,
+		p_deptemp.c_code code,
+		p_deptemp.c_status status
+	FROM
+		u_pb_gh,
+		p_deptemp
+	WHERE
+		p_deptemp.c_id = u_pb_gh.c_dept_id
+	<if test="bDate != null">
+    	<![CDATA[AND c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+  </select>
+  
+  <select id="getDocsByDeptId" resultType="map" parameterType="com.keng.main.entity.HisUpbgh">
+	SELECT
+		*
+	FROM
+		p_deptemp
+	WHERE
+		c_id IN (
+			SELECT DISTINCT
+				c_doctor_id
+			FROM
+				u_pb_gh
+				where c_dept_id = #{deptId,jdbcType=VARCHAR}
+	<if test="bDate != null">
+    	<![CDATA[AND c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+	)
+	
+  </select>
+  <!-- 查询maxId -->
+  <select id="getPageIds" parameterType="map" resultType="java.lang.String">
+	SELECT
+  		TOP ${lastRowNum} gh.c_id
+	FROM
+		u_pb_gh gh,
+		p_deptemp pd,
+		p_deptemp pp 
+	WHERE
+		gh.c_dept_id = pp.c_id
+	AND gh.c_doctor_id = pd.c_id
+	<if test="bDate != null">
+    	<![CDATA[AND gh.c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND gh.c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="deptq != null">
+    	AND pp.c_name like '%'||#{deptq,jdbcType=VARCHAR}||'%'  
+    </if>
+    <if test="docq != null">
+    	AND pd.c_name like '%'||#{docq,jdbcType=VARCHAR}||'%'
+    </if>
+    <if test="isHandAddq == '1'.toString()">
+    	AND gh.c_id like 'Z%' 
+    </if>
+    <if test="isHandAddq == '0'.toString()">
+    	AND gh.c_id not like 'Z%'  
+    </if>
+    ORDER BY gh.c_id desc	
+  </select>
+  <!-- 分页查询 -->
+  <select id="selectPager" resultType="map" parameterType="map">
+  	SELECT
+  		TOP ${pageSize} 
+		pd.c_name doctorname,
+		pp.c_name deptname,
+		gh.*
+	FROM
+		u_pb_gh gh,
+		p_deptemp pd,
+		p_deptemp pp 
+	WHERE
+		gh.c_dept_id = pp.c_id
+	AND gh.c_doctor_id = pd.c_id
+	<if test="bDate != null">
+    	<![CDATA[AND gh.c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND gh.c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="deptq != null">
+    	AND pp.c_name like '%'||#{deptq,jdbcType=VARCHAR}||'%'  
+    </if>
+    <if test="docq != null">
+    	AND pd.c_name like '%'||#{docq,jdbcType=VARCHAR}||'%'
+    </if>
+    <if test="isHandAddq == '1'.toString()">
+    	AND gh.c_id like 'Z%' 
+    </if>
+    <if test="isHandAddq == '0'.toString()">
+    	AND gh.c_id not like 'Z%'  
+    </if>
+    <if test="lastId != null">
+    	<![CDATA[AND gh.c_id < #{lastId,jdbcType=VARCHAR}]]>
+    </if>
+    ORDER BY gh.c_id desc
+  </select>
+  <!-- 分页查询列表 -->
+  <select id="selectPagerCount" resultType="java.lang.Integer">
+  	SELECT
+		count(1)
+	FROM
+		u_pb_gh gh,
+		p_deptemp pd,
+		p_deptemp pp 
+	WHERE
+		gh.c_dept_id = pp.c_id
+	AND gh.c_doctor_id = pd.c_id
+	<if test="bDate != null">
+    	<![CDATA[AND gh.c_begin_date > #{bDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="eDate != null">
+    	<![CDATA[AND gh.c_begin_date < #{eDate,jdbcType=TIMESTAMP}]]>
+    </if>
+    <if test="deptq != null">
+    	AND pp.c_name like '%'||#{deptq,jdbcType=VARCHAR}||'%'  
+    </if>
+    <if test="docq != null">
+    	AND pd.c_name like '%'||#{docq,jdbcType=VARCHAR}||'%'
+    </if>
+	<if test="isHandAddq == '1'.toString()">
+    	AND gh.c_id like 'Z%' 
+    </if>
+    <if test="isHandAddq == '0'.toString()">
+    	AND gh.c_id not like 'Z%' 
+    </if>
+  </select>
+  <select id="addGh" parameterType="map" statementType="CALLABLE" >
+      {
+        call proc_insert_pb_1(
+           #{ghdeptId,mode=IN,jdbcType=VARCHAR},#{docId,mode=IN,jdbcType=VARCHAR}
+        	)
+   	  }
+  </select>
+  <select id="addGh5" parameterType="map" statementType="CALLABLE">
+      {
+        call proc_insert_pb_5(
+           #{ghdeptId,mode=IN,jdbcType=VARCHAR},#{docId,mode=IN,jdbcType=VARCHAR}
+        	)
+   	  }
+  </select>
+  <!-- 查看挂号截止时间 -->	
+  <select id="getGhTime" resultType="map">
+  	SELECT * FROM x_option WHERE c_code ='u_pb_jssj'
+  </select>
+  <!-- 修改挂号截止时间 -->	
+  <update id="editGhTime" parameterType="map">
+  	update x_option set c_value=#{c_value,jdbcType=VARCHAR} where c_code =#{c_code,jdbcType=VARCHAR}
+  </update>
+</mapper>

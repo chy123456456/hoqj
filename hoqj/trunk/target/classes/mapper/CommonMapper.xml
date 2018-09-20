@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.CommonMapper" >
+
+  <select id="selectDbCurrentTimestamp" resultType="java.util.Date" parameterType="map" >
+    SELECT CURRENT_TIMESTAMP
+  </select>
+
+  <select id="selectDbCurrentDate" resultType="java.util.Date" parameterType="map" >
+    SELECT CURRENT_DATE
+  </select>
+
+  <select id="selectByDynamicSql" resultType="map" parameterType="string" >
+    ${sql}
+  </select>
+  	
+</mapper>

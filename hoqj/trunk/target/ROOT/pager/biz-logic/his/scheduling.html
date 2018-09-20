@@ -1,0 +1,115 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>排班叫号</title>
+<#include "/pager/common/quote.html" />
+<script src="${base}/assets/common/zxxFile.js"></script>
+</head>
+<body>
+	<script>
+		
+	</script>
+	<div class="body-center">
+		<div class="html-panel query-panel" id="query_con">
+			<div class="panel-header">
+				<div class="panel-title">查询条件</div>
+			</div>
+			<div class="panel-content" id="menuMgrPanel">
+				<form onsubmit="return false;" id="queryForm" class="form_style">
+					<span class="spacing"><label>开始时间：</label> <input
+						class="easyui-datetimebox easyui-validatebox" id="bDate"
+						name="bDate" value="${bDate!''}" style="width: 150px" /> </span> <span
+						class="spacing"><label>结束时间：</label> <input
+						class="easyui-datetimebox easyui-validatebox" id="eDate"
+						name="eDate" value="${eDate!''}" style="width: 150px" /> </span> <span
+						class="spacing"><label>科室：</label><input type="text"
+						name="deptq" name="deptq" style="width: 120px" id="shopName" /></span> <span
+						class="spacing"><label>医生：</label><input type="text"
+						name="docq" name="docq" style="width: 120px" id="id" /></span> <span
+						class="spacing"><label>是否手动加号：</label> <select
+						id="isHandAdd" name="isHandAddq">
+							<option value="">请选择</option>
+							<option value="1">是</option>
+							<option value="0">否</option>
+					</select> </span> <span class="spacing"><input type="submit"
+						id="queryButton" value="查询" /></span>
+				</form>
+			</div>
+		</div>
+		<table style="fitColumns: false;" id="grid" title="排班列表">
+			<thead>
+				<th
+					data-options="field:'c_begin_date',width:80,resizable:true,align:'left'">号段</th>
+				<th
+					data-options="field:'doctorname',width:100,resizable:true,align:'left'">医生</th>
+				<th
+					data-options="field:'deptname',width:80,resizable:true,align:'left'">科室</th>
+				<th
+					data-options="field:'c_status',width:60,resizable:true,align:'left',formatter:formatter.status">状态</th>
+			</thead>
+		</table>
+	</div>
+	<!-- 新增叫号 -->
+	<div class="hide-panel">
+		<div id="schedulingAddDialog" style="width: 600px; height: 350px;"
+			data-options="resizable:false,modal:true,closed: true">
+			<form id="schedulingAddForm" class="form_style" method="post"
+				onsubmit="return false;">
+				<input type="hidden" name="id" id="id" /> <input type="hidden"
+					name="deptName" id="deptName" />
+				<div class="form-field">
+					<label for="deptId">科室：</label> 
+					<select id="ghdeptId" name="ghdeptId" style="width: 200px" onchange="getDocsByDeptId()">
+						<option value="">==请选择==</option>
+						<#if todayDepts?? && todayDepts?size gt 0> <#list todayDepts
+							as r>
+						<option value="${r.id?trim}">${r.name}</option>
+						</#list> </#if>
+					</select>
+				</div>
+				<div class="form-field">
+					<label for="docId">医生：<font color="red">*</font></label> <select
+						id="ghdocId" name="ghdocId" style="width: 200px">
+						<option value="">==请选择==</option>
+					</select>
+				</div>
+				<div class="form-field">
+					<label for="ghnumId">数量：<font color="red">*</font></label> <select
+						id="ghnumId" name="ghnumId" style="width: 200px">
+						<option value="">==请选择==</option>
+						<option value="1">==1==</option>
+						<option value="2">==2==</option>
+						<option value="5">==5==</option>
+						<option value="10">==10==</option>
+					</select>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- 编辑挂号号截止时间 -->
+	<div class="hide-panel">
+		<div id="ghTimeEditDialog" style="width: 300px; height: 200px;"
+			data-options="resizable:false,modal:true,closed: true">
+			<form id="ghTimeEditForm" action="scheduling/editGhTime"
+				class="form_style" method="post" onsubmit="return false;">
+				<div class="form-field">
+					<label for="user">编号：<font color="red"></font></label> <input
+						class="easyui-validatebox" readonly="readonly" type="text"
+						name="c_code" id="c_code" />
+				</div>
+				<div class="form-field">
+					<label for="user">名称：<font color="red"></font></label> <input
+						class="easyui-validatebox" readonly="readonly" type="text"
+						name="c_name" id="c_name" />
+				</div>
+				<div class="form-field">
+					<label for="user">值：<font color="red"></font></label> <input
+						class="easyui-validatebox" type="text" name="c_value" id="c_value" />
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+</@compress>

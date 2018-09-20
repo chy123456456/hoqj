@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.SysFilesMapper">
+    <resultMap id="BaseResultMap" type="com.keng.main.entity.SysFiles">
+        <id column="f_id" property="fId" jdbcType="INTEGER"/>
+        <result column="g_id" property="gId" jdbcType="INTEGER"/>
+        <result column="remote_name" property="remoteName" jdbcType="VARCHAR"/>
+        <result column="local_name" property="localName" jdbcType="VARCHAR"/>
+        <result column="save_path" property="savePath" jdbcType="VARCHAR"/>
+        <result column="file_mode" property="fileMode" jdbcType="VARCHAR"/>
+        <result column="file_type" property="fileType" jdbcType="VARCHAR"/>
+        <result column="file_size" property="fileSize" jdbcType="BIGINT"/>
+        <result column="file_status" property="fileStatus" jdbcType="INTEGER"/>
+        <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        f_id, g_id, remote_name, local_name, save_path, file_mode, file_type, file_size, file_status, upload_time,sort
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from sys_files where f_id = #{fId,jdbcType=INTEGER}
+    </select>
+    <select id="selectEffectivByPK" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from sys_files where f_id = #{fId,jdbcType=INTEGER} and file_status = 1
+    </select>
+    <select id="selectByGId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select <include refid="Base_Column_List"/> from sys_files where g_id = #{gId,jdbcType=INTEGER} and file_status = 1 order by sort asc
+    </select>
+<!--     <select id="selectByGIds" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+			f_id,
+			g_id,
+			remote_name,
+			local_name,
+			save_path,
+			file_mode,
+			file_type,
+			file_size,
+			file_status,
+			upload_time,
+			sort,
+		  CONCAT('${urlPath}','/account/document/file-',f_id,'.do') shopPhoto
+		FROM
+			sys_files where g_id = #{gId,jdbcType=INTEGER} and file_status = 1 order by sort asc
+    </select> -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+        delete from sys_files where f_id = #{fId,jdbcType=INTEGER}
+    </delete>
+    <delete id="deleteByGId" parameterType="java.lang.Integer">
+        delete from sys_files where g_id = #{gId,jdbcType=INTEGER}
+    </delete>
+	<!-- 修改图片顺序 -->
+    <update id="updFileSort" parameterType="map">
+		update sys_files set sort=#{sort,jdbcType=INTEGER} where f_id = #{fId,jdbcType=INTEGER}
+	</update>
+    
+    <insert id="insert" parameterType="com.keng.main.entity.SysFiles" keyProperty="fId">
+        insert into sys_files (f_id, remote_name, local_name,
+          save_path, file_mode, g_id, file_type, file_size, file_status, upload_time)
+        values (#{fId,jdbcType=INTEGER}, #{remoteName,jdbcType=VARCHAR}, #{localName,jdbcType=VARCHAR},
+          #{savePath,jdbcType=VARCHAR}, #{fileMode,jdbcType=VARCHAR}, #{gId,jdbcType=INTEGER},
+          #{fileType,jdbcType=VARCHAR}, #{fileSize,jdbcType=BIGINT}, #{fileStatus,jdbcType=INTEGER},
+          #{uploadTime,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.keng.main.entity.SysFiles" keyProperty="fId">
+        insert into sys_files
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fId != null">
+                f_id,
+            </if>
+            <if test="remoteName != null">
+                remote_name,
+            </if>
+            <if test="localName != null">
+                local_name,
+            </if>
+            <if test="savePath != null">
+                save_path,
+            </if>
+            <if test="fileMode != null">
+                file_mode,
+            </if>
+            <if test="gId != null">
+                g_id,
+            </if>
+            <if test="fileType != null">
+                file_type,
+            </if>
+            <if test="fileSize != null">
+                file_size,
+            </if>
+            <if test="fileStatus != null">
+                file_status,
+            </if>
+            <if test="uploadTime != null">
+                upload_time,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fId != null">
+                #{fId,jdbcType=INTEGER},
+            </if>
+            <if test="remoteName != null">
+                #{remoteName,jdbcType=VARCHAR},
+            </if>
+            <if test="localName != null">
+                #{localName,jdbcType=VARCHAR},
+            </if>
+            <if test="savePath != null">
+                #{savePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileMode != null">
+                #{fileMode,jdbcType=VARCHAR},
+            </if>
+            <if test="gId != null">
+                #{gId,jdbcType=INTEGER},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileStatus != null">
+                #{fileStatus,jdbcType=INTEGER},
+            </if>
+            <if test="uploadTime != null">
+                #{uploadTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.SysFiles">
+        update sys_files
+        <set>
+            <if test="remoteName != null">
+                remote_name = #{remoteName,jdbcType=VARCHAR},
+            </if>
+            <if test="localName != null">
+                local_name = #{localName,jdbcType=VARCHAR},
+            </if>
+            <if test="savePath != null">
+                save_path = #{savePath,jdbcType=VARCHAR},
+            </if>
+            <if test="fileMode != null">
+                file_mode = #{fileMode,jdbcType=VARCHAR},
+            </if>
+            <if test="gId != null">
+                g_id = #{gId,jdbcType=INTEGER},
+            </if>
+            <if test="fileType != null">
+                file_type = #{fileType,jdbcType=VARCHAR},
+            </if>
+            <if test="fileSize != null">
+                file_size = #{fileSize,jdbcType=BIGINT},
+            </if>
+            <if test="fileStatus != null">
+                file_status = #{fileStatus,jdbcType=INTEGER},
+            </if>
+            <if test="uploadTime != null">
+                upload_time = #{uploadTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.SysFiles">
+        update sys_files
+        set remote_name = #{remoteName,jdbcType=VARCHAR},
+          local_name = #{localName,jdbcType=VARCHAR},
+          save_path = #{savePath,jdbcType=VARCHAR},
+          file_mode = #{fileMode,jdbcType=VARCHAR},
+          g_id = #{gId,jdbcType=INTEGER},
+          file_type = #{fileType,jdbcType=VARCHAR},
+          file_size = #{fileSize,jdbcType=BIGINT},
+          file_status = #{fileStatus,jdbcType=INTEGER},
+          upload_time = #{uploadTime,jdbcType=TIMESTAMP}
+        where f_id = #{fId,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateByGId">
+        update sys_files set g_id = #{gId} where f_id = #{fId}
+    </update>
+    <update id="updateFileStatus">
+        update sys_files set file_status = 0 where f_id != #{fId} and g_id=#{gId} and file_mode=#{fileMode}
+    </update>
+    <update id="deleteFile">
+        UPDATE sys_files SET file_status = 0 WHERE f_id = #{fId}
+    </update>
+    <update id="updateGid">
+        UPDATE sys_files SET g_id = #{newGid} WHERE g_id = #{oldGid}
+    </update>
+</mapper>

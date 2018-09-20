@@ -1,0 +1,684 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.DeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.Device" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="dept_id" property="deptId" jdbcType="VARCHAR" />
+    <result column="dept_name" property="deptName" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="pc_name" property="pcName" jdbcType="VARCHAR" />
+    <result column="location" property="location" jdbcType="VARCHAR" />
+    <result column="buy_time" property="buyTime" jdbcType="TIMESTAMP" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="specification" property="specification" jdbcType="VARCHAR" />
+    <result column="net_type" property="netType" jdbcType="INTEGER" />
+    <result column="registration_time" property="registrationTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="office_soft" property="officeSoft" jdbcType="VARCHAR" />
+    <result column="operating_soft" property="operatingSoft" jdbcType="VARCHAR" />
+    <result column="anti_virus_soft" property="antiVirusSoft" jdbcType="VARCHAR" />
+    <result column="applier" property="applier" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="user" property="user" jdbcType="VARCHAR" />
+    <result column="scraper" property="scraper" jdbcType="VARCHAR" />
+    <result column="scrap_time" property="scrapTime" jdbcType="TIMESTAMP" />
+    <result column="creater_id" property="createrId" jdbcType="VARCHAR" />
+    <result column="creater" property="creater" jdbcType="VARCHAR" />
+    <result column="updater_id" property="updaterId" jdbcType="VARCHAR" />
+    <result column="updater" property="updater" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, device_no, type, dept_id, dept_name, ip, mac, pc_name, location, buy_time, brand, 
+    specification, net_type, registration_time, remark, status, price, office_soft, operating_soft, 
+    anti_virus_soft, applier, apply_time, user, scraper, scrap_time, creater_id, creater, 
+    updater_id, updater, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_device
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_device
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.keng.main.entity.Device" >
+    insert into tb_device (id, device_no, type, 
+      dept_id, dept_name, ip, 
+      mac, pc_name, location, 
+      buy_time, brand, specification, 
+      net_type, registration_time, remark, 
+      status, price, office_soft, 
+      operating_soft, anti_virus_soft, applier, 
+      apply_time, user, scraper, 
+      scrap_time, creater_id, creater, 
+      updater_id, updater, create_time, 
+      update_time)
+    values (#{id,jdbcType=INTEGER}, #{deviceNo,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{deptId,jdbcType=VARCHAR}, #{deptName,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, 
+      #{mac,jdbcType=VARCHAR}, #{pcName,jdbcType=VARCHAR}, #{location,jdbcType=VARCHAR}, 
+      #{buyTime,jdbcType=TIMESTAMP}, #{brand,jdbcType=VARCHAR}, #{specification,jdbcType=VARCHAR}, 
+      #{netType,jdbcType=INTEGER}, #{registrationTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{officeSoft,jdbcType=VARCHAR}, 
+      #{operatingSoft,jdbcType=VARCHAR}, #{antiVirusSoft,jdbcType=VARCHAR}, #{applier,jdbcType=VARCHAR}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{user,jdbcType=VARCHAR}, #{scraper,jdbcType=VARCHAR}, 
+      #{scrapTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=VARCHAR}, #{creater,jdbcType=VARCHAR}, 
+      #{updaterId,jdbcType=VARCHAR}, #{updater,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.Device" >
+    insert into tb_device
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="deptId != null" >
+        dept_id,
+      </if>
+      <if test="deptName != null" >
+        dept_name,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="pcName != null" >
+        pc_name,
+      </if>
+      <if test="location != null" >
+        location,
+      </if>
+      <if test="buyTime != null" >
+        buy_time,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="specification != null" >
+        specification,
+      </if>
+      <if test="netType != null" >
+        net_type,
+      </if>
+      <if test="registrationTime != null" >
+        registration_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="officeSoft != null" >
+        office_soft,
+      </if>
+      <if test="operatingSoft != null" >
+        operating_soft,
+      </if>
+      <if test="antiVirusSoft != null" >
+        anti_virus_soft,
+      </if>
+      <if test="applier != null" >
+        applier,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="user != null" >
+        user,
+      </if>
+      <if test="scraper != null" >
+        scraper,
+      </if>
+      <if test="scrapTime != null" >
+        scrap_time,
+      </if>
+      <if test="createrId != null" >
+        creater_id,
+      </if>
+      <if test="creater != null" >
+        creater,
+      </if>
+      <if test="updaterId != null" >
+        updater_id,
+      </if>
+      <if test="updater != null" >
+        updater,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="pcName != null" >
+        #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="buyTime != null" >
+        #{buyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="netType != null" >
+        #{netType,jdbcType=INTEGER},
+      </if>
+      <if test="registrationTime != null" >
+        #{registrationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="officeSoft != null" >
+        #{officeSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingSoft != null" >
+        #{operatingSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="antiVirusSoft != null" >
+        #{antiVirusSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="applier != null" >
+        #{applier,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="user != null" >
+        #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="scraper != null" >
+        #{scraper,jdbcType=VARCHAR},
+      </if>
+      <if test="scrapTime != null" >
+        #{scrapTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createrId != null" >
+        #{createrId,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        #{updaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.Device" >
+    update tb_device
+    <set >
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="deptName != null" >
+        dept_name = #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="pcName != null" >
+        pc_name = #{pcName,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null" >
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="buyTime != null" >
+        buy_time = #{buyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="specification != null" >
+        specification = #{specification,jdbcType=VARCHAR},
+      </if>
+      <if test="netType != null" >
+        net_type = #{netType,jdbcType=INTEGER},
+      </if>
+      <if test="registrationTime != null" >
+        registration_time = #{registrationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="officeSoft != null" >
+        office_soft = #{officeSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingSoft != null" >
+        operating_soft = #{operatingSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="antiVirusSoft != null" >
+        anti_virus_soft = #{antiVirusSoft,jdbcType=VARCHAR},
+      </if>
+      <if test="applier != null" >
+        applier = #{applier,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="user != null" >
+        user = #{user,jdbcType=VARCHAR},
+      </if>
+      <if test="scraper != null" >
+        scraper = #{scraper,jdbcType=VARCHAR},
+      </if>
+      <if test="scrapTime != null" >
+        scrap_time = #{scrapTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createrId != null" >
+        creater_id = #{createrId,jdbcType=VARCHAR},
+      </if>
+      <if test="creater != null" >
+        creater = #{creater,jdbcType=VARCHAR},
+      </if>
+      <if test="updaterId != null" >
+        updater_id = #{updaterId,jdbcType=VARCHAR},
+      </if>
+      <if test="updater != null" >
+        updater = #{updater,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.Device" >
+    update tb_device
+    set device_no = #{deviceNo,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      dept_id = #{deptId,jdbcType=VARCHAR},
+      dept_name = #{deptName,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      pc_name = #{pcName,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      buy_time = #{buyTime,jdbcType=TIMESTAMP},
+      brand = #{brand,jdbcType=VARCHAR},
+      specification = #{specification,jdbcType=VARCHAR},
+      net_type = #{netType,jdbcType=INTEGER},
+      registration_time = #{registrationTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      price = #{price,jdbcType=DECIMAL},
+      office_soft = #{officeSoft,jdbcType=VARCHAR},
+      operating_soft = #{operatingSoft,jdbcType=VARCHAR},
+      anti_virus_soft = #{antiVirusSoft,jdbcType=VARCHAR},
+      applier = #{applier,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      user = #{user,jdbcType=VARCHAR},
+      scraper = #{scraper,jdbcType=VARCHAR},
+      scrap_time = #{scrapTime,jdbcType=TIMESTAMP},
+      creater_id = #{createrId,jdbcType=VARCHAR},
+      creater = #{creater,jdbcType=VARCHAR},
+      updater_id = #{updaterId,jdbcType=VARCHAR},
+      updater = #{updater,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <!-- 分页查询 -->
+  <select id="selectPager" resultMap="BaseResultMap" parameterType="Pager">
+      select* FROM tb_device where 1=1
+      <if test="deviceNo != null" >
+       and  device_no  LIKE CONCAT('%',#{deviceNo,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="type != null" >
+       and  type = #{type,jdbcType=INTEGER}
+      </if>
+      <if test="deptId != null" >
+       and  dept_id = #{deptId,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and  dept_name LIKE CONCAT('%',#{deptName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="ip != null" >
+       and  ip  LIKE CONCAT('%',#{ip,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="mac != null" >
+       and  mac LIKE CONCAT('%',#{mac,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="pcName != null" >
+       and  pc_name LIKE CONCAT('%',#{pcName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="location != null" >
+       and  location LIKE CONCAT('%',#{location,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="buyTime != null" >
+       and  buy_time = #{buyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="brand != null" >
+       and  brand LIKE CONCAT('%',#{brand,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="specification != null" >
+       and  specification LIKE CONCAT('%',#{specification,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="netType != null" >
+       and  net_type = #{netType,jdbcType=INTEGER}
+      </if>
+      <if test="registrationTime != null" >
+       and  registration_time = #{registrationTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null" >
+       and  remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null" >
+       and  status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="price != null" >
+       and  price = #{price,jdbcType=DECIMAL}
+      </if>
+      <if test="officeSoft != null" >
+       and  office_soft LIKE CONCAT('%',#{officeSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="operatingSoft != null" >
+       and  operating_soft LIKE CONCAT('%',#{operatingSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="antiVirusSoft != null" >
+       and  anti_virus_soft LIKE CONCAT('%',#{antiVirusSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applier != null" >
+       and  applier LIKE CONCAT('%',#{applier,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applyTime != null" >
+       and  apply_time = #{applyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="user != null" >
+       and  user LIKE CONCAT('%',#{user,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scraper != null" >
+       and  scraper LIKE CONCAT('%',#{scraper,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scrapTime != null" >
+       and  scrap_time = #{scrapTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createrId != null" >
+       and  creater_id = #{createrId,jdbcType=VARCHAR}
+      </if>
+      <if test="creater != null" >
+       and  creater LIKE CONCAT('%',#{creater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="createTime != null" >
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updaterId != null" >
+       and  updater_id = #{updaterId,jdbcType=VARCHAR}
+      </if>
+      <if test="updater != null" >
+       and  updater LIKE CONCAT('%',#{updater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="updateTime != null" >
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+      limit #{begRow}, #{pageSize}
+  </select>
+  <select id="selectPagerCount" resultType="java.lang.Integer" parameterType="Pager">
+  	select count(1) FROM tb_device where 1=1
+  	<if test="deviceNo != null" >
+       and  device_no  LIKE CONCAT('%',#{deviceNo,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="type != null" >
+       and  type = #{type,jdbcType=INTEGER}
+      </if>
+      <if test="deptId != null" >
+       and  dept_id = #{deptId,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and  dept_name LIKE CONCAT('%',#{deptName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="ip != null" >
+       and  ip  LIKE CONCAT('%',#{ip,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="mac != null" >
+       and  mac LIKE CONCAT('%',#{mac,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="pcName != null" >
+       and  pc_name LIKE CONCAT('%',#{pcName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="location != null" >
+       and  location LIKE CONCAT('%',#{location,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="buyTime != null" >
+       and  buy_time = #{buyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="brand != null" >
+       and  brand LIKE CONCAT('%',#{brand,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="specification != null" >
+       and  specification LIKE CONCAT('%',#{specification,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="netType != null" >
+       and  net_type = #{netType,jdbcType=INTEGER}
+      </if>
+      <if test="registrationTime != null" >
+       and  registration_time = #{registrationTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null" >
+       and  remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null" >
+       and  status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="price != null" >
+       and  price = #{price,jdbcType=DECIMAL}
+      </if>
+      <if test="officeSoft != null" >
+       and  office_soft LIKE CONCAT('%',#{officeSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="operatingSoft != null" >
+       and  operating_soft LIKE CONCAT('%',#{operatingSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="antiVirusSoft != null" >
+       and  anti_virus_soft LIKE CONCAT('%',#{antiVirusSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applier != null" >
+       and  applier LIKE CONCAT('%',#{applier,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applyTime != null" >
+       and  apply_time = #{applyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="user != null" >
+       and  user LIKE CONCAT('%',#{user,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scraper != null" >
+       and  scraper LIKE CONCAT('%',#{scraper,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scrapTime != null" >
+       and  scrap_time = #{scrapTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createrId != null" >
+       and  creater_id = #{createrId,jdbcType=VARCHAR}
+      </if>
+      <if test="creater != null" >
+       and  creater LIKE CONCAT('%',#{creater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="createTime != null" >
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updaterId != null" >
+       and  updater_id = #{updaterId,jdbcType=VARCHAR}
+      </if>
+      <if test="updater != null" >
+       and  updater LIKE CONCAT('%',#{updater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="updateTime != null" >
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  <select id="selectBySelective" parameterType="com.keng.main.entity.Device" resultMap="BaseResultMap">
+  	select * FROM tb_device where 1=1
+  	<if test="deviceNo != null" >
+       and  device_no  LIKE CONCAT('%',#{deviceNo,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="type != null" >
+       and  type = #{type,jdbcType=INTEGER}
+      </if>
+      <if test="deptId != null" >
+       and  dept_id = #{deptId,jdbcType=VARCHAR}
+      </if>
+      <if test="deptName != null" >
+       and  dept_name LIKE CONCAT('%',#{deptName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="ip != null" >
+       and  ip  LIKE CONCAT('%',#{ip,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="mac != null" >
+       and  mac LIKE CONCAT('%',#{mac,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="pcName != null" >
+       and  pc_name LIKE CONCAT('%',#{pcName,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="location != null" >
+       and  location LIKE CONCAT('%',#{location,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="buyTime != null" >
+       and  buy_time = #{buyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="brand != null" >
+       and  brand LIKE CONCAT('%',#{brand,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="specification != null" >
+       and  specification LIKE CONCAT('%',#{specification,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="netType != null" >
+       and  net_type = #{netType,jdbcType=INTEGER}
+      </if>
+      <if test="registrationTime != null" >
+       and  registration_time = #{registrationTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="remark != null" >
+       and  remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="status != null" >
+       and  status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="price != null" >
+       and  price = #{price,jdbcType=DECIMAL}
+      </if>
+      <if test="officeSoft != null" >
+       and  office_soft LIKE CONCAT('%',#{officeSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="operatingSoft != null" >
+       and  operating_soft LIKE CONCAT('%',#{operatingSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="antiVirusSoft != null" >
+       and  anti_virus_soft LIKE CONCAT('%',#{antiVirusSoft,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applier != null" >
+       and  applier LIKE CONCAT('%',#{applier,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="applyTime != null" >
+       and  apply_time = #{applyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="user != null" >
+       and  user LIKE CONCAT('%',#{user,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scraper != null" >
+       and  scraper LIKE CONCAT('%',#{scraper,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="scrapTime != null" >
+       and  scrap_time = #{scrapTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="createrId != null" >
+       and  creater_id = #{createrId,jdbcType=VARCHAR}
+      </if>
+      <if test="creater != null" >
+       and  creater LIKE CONCAT('%',#{creater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="createTime != null" >
+       and  create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updaterId != null" >
+       and  updater_id = #{updaterId,jdbcType=VARCHAR}
+      </if>
+      <if test="updater != null" >
+       and  updater LIKE CONCAT('%',#{updater,jdbcType=VARCHAR},'%')
+      </if>
+      <if test="updateTime != null" >
+       and  update_time = #{updateTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+  <select id="selectByDeviceNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select * from tb_device where device_no = #{deviceNo,jdbcType=VARCHAR}
+  </select>
+</mapper>

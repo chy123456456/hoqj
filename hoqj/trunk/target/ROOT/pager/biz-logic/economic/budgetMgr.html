@@ -1,0 +1,65 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>预算管理</title>
+<#include "/pager/common/quote.html" />
+<link rel="stylesheet" href="${base}/assets/common/treeview/jquery.treeview.css" />
+	<link rel="stylesheet" href="${base}/assets/common/treeview/screen.css" />
+	<script src="${base}/assets/common/treeview/jquery.cookie.js"></script>
+	<script src="${base}/assets/common/treeview/jquery.treeview.js"></script>
+	<script type="text/javascript" src="${base}/assets/common/treeview/demo.js"></script>
+	<script type="text/javascript">
+</script>
+</head>
+<body>
+	<div class="body-center">
+		<div class="html-panel">
+			<div class="panel-header">
+				<div class="panel-title">实际-预算对比表</div>
+			</div>
+			<div class="panel-content" id="roleMgrPanel">
+				<h4>Sample 1 - default</h4>
+				<ul id="browser" class="filetree">
+					<li><span class="folder">Folder 1</span>
+						<ul>
+							<li><span class="file">Item 1.1</span></li>
+						</ul></li>
+					<li><span class="folder">Folder 2</span>
+						<ul>
+							<li><span class="folder">Subfolder 2.1</span>
+								<ul id="folder21">
+									<li><span class="file">File 2.1.1</span></li>
+									<li><span class="file">File 2.1.2</span></li>
+								</ul></li>
+							<li><span class="file">File 2.2</span></li>
+						</ul></li>
+					<li class="closed"><span class="folder">Folder 3
+							(closed at start)</span>
+						<ul>
+							<li><span class="file">File 3.1</span></li>
+						</ul></li>
+					<li><span class="file">File 4</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="hide-panel">
+        <div id="roleEditDialog" style="width:330px;height:150px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="roleEditForm" class="form_style">
+                <div class="form-field">
+                    <label for="username">上级角色：<font color="red">*</font></label>
+                    <input type="hidden" name="parentRole" id="parentRole"/>
+                    <input type="text" name="parentRoleName" id="parentRoleName" disabled="disabled"/>
+                </div>
+                <div class="form-field">
+                    <label for="nick">角色名称：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="roleName" id="roleName" data-options="required:true" maxlength="30"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>
+

@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.SysUsersMapper">
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache" />
+	<resultMap id="BaseResultMap" type="com.keng.main.entity.SysUsers">
+		<id column="id" property="id" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<association property="dept" column="dept_id" select="com.keng.main.mapper.SysDeptMapper.getDeptById"/>
+		<!-- <association property="pkeys" column="user_id" select="com.keng.main.mapper.ProductMapper.getProuctKeyByUserId"/>   -->
+	</resultMap>
+	<resultMap id="CascadeRole" type="com.keng.main.entity.SysUsers"
+		extends="BaseResultMap">
+		<collection property="roles" ofType="com.keng.main.entity.SysRoles"
+			resultMap="com.keng.main.mapper.SysRolesMapper.BaseResultMap" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id,code ,name, password, sex, status
+	</sql>
+	<resultMap id="CascadeRoleMenu" type="com.keng.main.entity.SysUsers"
+		extends="BaseResultMap">
+		<collection column="id" property="roles"
+			ofType="com.keng.main.entity.SysRoles" select="com.keng.main.mapper.SysRolesMapper.getRolesByUserId" />
+		<collection column="{userId=id}" property="menus"
+			ofType="com.keng.main.entity.SysMenus" select="com.keng.main.mapper.SysMenusMapper.getMenusByUserId" />
+		<!-- <collection column="{userId=user_id,language=language}" property="menus"
+			ofType="com.keng.main.entity.SysMenus" select="com.keng.main.mapper.SysMenusMapper.getMenusByUserId" /> -->
+	</resultMap>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select *
+		from sys_users a where a.id = #{userId,jdbcType=INTEGER}
+	</select>
+	<select id="getAllUsers" resultMap="BaseResultMap">
+		SELECT user_id, nick FROM sys_userss
+	</select>
+	<select id="selectByUsername" resultMap="CascadeRoleMenu"
+		parameterType="java.lang.String" useCache="false">
+		<!-- select u.*,r.role_id from sys_users u,sys_user_role r where u.user_id =
+		r.user_id and u.username = #{username,jdbcType=VARCHAR} limit 0,1 -->
+		<!-- SELECT * FROM p_deptemp WHERE c_status = 1 AND c_type=3 and c_code = #{username,jdbcType=VARCHAR} -->
+		select u.*,r.role_id from sys_users u,sys_user_role r where u.id =
+		r.user_id and u.code = #{username,jdbcType=VARCHAR} limit 0,1
+	</select>
+	<select id="selectPager" resultMap="CascadeRole" parameterType="map">
+		select a.*, b.role_id from
+		(select * from sys_users u
+		<where>
+			<if test="username != null">and u.name like
+				CONCAT('%',#{username,jdbcType=VARCHAR},'%')</if>
+			<if test="code != null">and u.code like CONCAT('%',#{code,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="status != null">and u.status = #{status,jdbcType=INTEGER}</if>
+		</where>
+		 ) a
+		LEFT JOIN sys_user_role b ON a.id = b.user_id
+		WHERE 1=1
+		<!-- and b.role_id <![CDATA[<>]]>
+		#{role,jdbcType=VARCHAR} AND FIND_IN_SET(b.role_id,
+		#{childRole,jdbcType=VARCHAR}) -->
+		<if test="roleId != null">and b.role_id = #{roleId,jdbcType=VARCHAR}</if>
+		 limit #{begRow}, #{pageSize}
+	</select>
+	<select id="selectPagerCount" resultType="java.lang.Integer"
+		parameterType="map">
+		select count(0) as count from (select a.*,count(a.id) from
+		sys_users a LEFT JOIN sys_user_role b ON a.id = b.user_id
+		<where>
+			<if test="username != null">and a.name like
+				CONCAT('%',#{username,jdbcType=VARCHAR},'%')</if>
+			<if test="nick != null">and a.name like CONCAT('%',#{nick,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="status != null">and a.status = #{status,jdbcType=INTEGER}</if>
+			<if test="roleId != null">and b.role_id = #{roleId,jdbcType=VARCHAR}</if>
+			<!--AND b.role_id <![CDATA[<>]]>
+			#{role,jdbcType=VARCHAR}
+			AND FIND_IN_SET(b.role_id, #{childRole,jdbcType=VARCHAR}) -->
+		</where>
+		group by a.id) c
+	</select>
+	<select id="selectByParams" resultMap="BaseResultMap"
+		parameterType="map">
+		select
+		<include refid="Base_Column_List" />
+		from sys_users
+		<where>
+			<if test="username != null">and username = #{username}</if>
+		</where>
+	</select>
+	<select id="selectRoleChild" resultMap="BaseResultMap">
+		SELECT s.* FROM sys_users s, sys_user_role r WHERE s.user_id =
+		r.user_id AND FIND_IN_SET(r.role_id,#{childRole,jdbcType=VARCHAR}) AND
+		r.role_id <![CDATA[<>]]>
+		#{roleId,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		update sys_users set status='0' where id = #{userId,jdbcType=VARCHAR}
+	</delete>
+	<delete id="batchDeleteUser" parameterType="arraylist">
+		update sys_users set status='0' where user_id in
+		<foreach collection="ids" item="id" index="i" open="("
+			separator="," close=")">
+			#{id,jdbcType=VARCHAR}
+		</foreach>
+	</delete>
+	<insert id="insert" parameterType="com.keng.main.entity.SysUsers"
+		keyProperty="userId">
+		insert into sys_users (user_id, nick, username, password, status,
+		update_date, create_date)
+		values (#{userId,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR},
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},  #{status,jdbcType=INTEGER},
+		#{updateDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="saveUser" parameterType="com.keng.main.entity.SysUsers" keyProperty="userId">
+        insert into sys_users (user_id, nick, username, password,  status, update_date, create_date)
+        values (#{userId,jdbcType=INTEGER}, #{nick,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR},
+        #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+        #{updateDate,jdbcType=TIMESTAMP}, #{createDate,jdbcType=TIMESTAMP})
+  	</insert>
+	<insert id="insertSelective" parameterType="com.keng.main.entity.SysUsers">
+		insert into sys_users
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="nick != null">
+				nick,
+			</if>
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="updateDate != null">
+				update_date,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="nick != null">
+				#{nick,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="updateDate != null">
+				#{updateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.SysUsers">
+		update sys_users
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				password = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.keng.main.entity.SysUsers">
+		update sys_users
+		set nick = #{nick,jdbcType=VARCHAR},
+		username = #{username,jdbcType=VARCHAR},
+		password = #{password,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		update_date = #{updateDate,jdbcType=TIMESTAMP},
+		create_date = #{createDate,jdbcType=TIMESTAMP}
+		where user_id = #{userId,jdbcType=INTEGER}
+	</update>
+	<!-- 查询所有的审核员 -->
+    <select id="selectAllVer" resultMap="BaseResultMap">
+		SELECT u.user_id AS userId,u.username,u.phone FROM sys_users u
+			LEFT JOIN sys_user_role r ON u.user_id=r.user_id WHERE r.role_id=(SELECT role_id FROM sys_roles WHERE role_name='审核员')
+    </select>
+    <!-- 根据名称查询审核员信息 -->
+    <select id="allNameList" resultMap="BaseResultMap" parameterType="map">
+		select user_id as userId,username,phone from sys_users
+		<where>
+			 status=1
+            <if test="username != null">and BINARY username = #{username,jdbcType=VARCHAR}</if>
+        </where>
+    </select>
+</mapper>

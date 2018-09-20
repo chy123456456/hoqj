@@ -1,0 +1,76 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据字典</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                    <span class="spacing"><label>ID：</label><input type="text" name="cfgId"/></span>
+                    <span class="spacing"><label>P_ID：</label><input type="text" name="parentCfg"/></span>
+                    <span class="spacing"><label>状态：</label><select name="status"><option value="">==请选择==</option><option value="1">正常</option><option value="0">停用</option></select></span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                </form>
+            </div>
+        </div>
+        <table id="grid" data-options="url:'conf/list.html',method:'post'" title="参数列表">
+            <thead>
+                <th data-options="field:'cfgId',width:80,resizable:true,align:'left'">ID</th>
+                <th data-options="field:'cfgKey',width:80,resizable:true,align:'left'">KEY</th>
+                <th data-options="field:'cfgVal',width:80,resizable:true,align:'left'">VAL</th>
+                <th data-options="field:'remark',width:80,resizable:true,align:'left'">描述</th>
+                <th data-options="field:'parentCfg',width:80,resizable:true,align:'left'">P_ID</th>
+                <th data-options="field:'parentKey',width:80,resizable:true,align:'left'">P_KEY</th>
+                <th data-options="field:'sort',width:80,resizable:true,align:'left'">排序</th>
+                <th data-options="field:'status',width:30,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'opt',width:100,resizable:true,align:'center',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    <div class="hide-panel">
+        <div id="configEditDialog" style="width:430px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="configEditForm" class="form_style" method="post" onsubmit="return false;">
+                <div class="form-field">
+                    <label for="cfgId">ID：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="cfgId" id="cfgId" maxlength="30" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="cfgKey">KEY：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="cfgKey" id="cfgKey" maxlength="30" data-options="required:true"/>
+                </div>
+                <div class="form-field">
+                    <label for="cfgVal">VAL：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="cfgVal" maxlength="50" data-options="required:true"/>
+                </div>
+                <div class="form-field">
+                    <label for="remark">描述：</label>
+                    <input class="easyui-validatebox" type="text" name="remark" maxlength="210"/>
+                </div>
+                <div class="form-field">
+                    <label for="parentCfg">P_ID：</label>
+                    <input class="easyui-validatebox" type="text" name="parentCfg" maxlength="50"/>
+                </div>
+                <div class="form-field">
+                    <label for="parentKey">P_KEY：</label>
+                    <input class="easyui-validatebox" type="text" name="parentKey" maxlength="50"/>
+                </div>
+                <div class="form-field">
+                    <label for="status">状态：</label>
+                    <input type="radio" name="status" value="1" checked="checked" /><span class="check-label">正常</span>
+                    <input type="radio" name="status" value="0" /><span  class="check-label">停用</span>
+                </div>
+                <div class="form-field">
+                    <label for="sort">排序：</label>
+                    <input class="easyui-validatebox" type="text" name="sort" id="sort" maxlength="50"/>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>

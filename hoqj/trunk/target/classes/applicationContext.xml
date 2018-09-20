@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation="
+           http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context   
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+  <context:component-scan base-package="com.keng.main.service,com.keng.base">
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Service" />
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository" />
+    <context:include-filter type="annotation" expression="org.springframework.stereotype.Component" />
+  </context:component-scan>
+
+  <!-- 支持上传文件 -->
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+  <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="locations">
+      <list>
+        <value>classpath:prop-jdbc.properties</value>
+        <value>classpath:prop-threadpool.properties</value>
+        <value>classpath:constants.properties</value>
+      </list>
+    </property>
+  </bean>
+  
+  <!-- spring线程池（特殊情况可使用该线程池，注意：同时需要加载prop-pool.properties配置文件） -->
+  <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <property name="corePoolSize" value="${thread.pool.corePoolSize}" />
+    <property name="maxPoolSize" value="${thread.pool.maxPoolSize}" />
+    <property name="queueCapacity" value="${thread.pool.queueCapacity}" />
+    <property name="keepAliveSeconds" value="${thread.pool.keepAliveSeconds}" />
+  </bean>
+
+  <import resource="application-jdbc.xml" />
+  <import resource="application-shiro.xml" />
+  <import resource="application-freemarker.xml" />
+  <import resource="application-cache.xml" />
+  <import resource="application-i18n.xml" />
+
+</beans>

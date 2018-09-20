@@ -1,0 +1,19 @@
+<@compress single_line=isCompress>
+(function($){
+    $.fn.display = {
+    <#if types?? && types?size gt 0>
+        <#list types as t>
+        	${t}:<@display type=t /><#if t_has_next>,</#if>
+        </#list>
+    </#if>
+    };
+    <#if confs?? && confs?size gt 0>
+    var confs = {
+        <#list confs as c>
+            ${c}:<@display type="conf$" + c /><#if c_has_next>,</#if>
+        </#list>
+    };
+    $.fn.display.conf = confs;
+    </#if>
+})(jQuery);
+</@compress>

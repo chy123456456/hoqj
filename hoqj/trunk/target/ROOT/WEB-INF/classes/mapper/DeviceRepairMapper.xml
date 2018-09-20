@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.DeviceRepairMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.DeviceRepair" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="device_id" property="deviceId" jdbcType="INTEGER" />
+    <result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+    <result column="proposer" property="proposer" jdbcType="VARCHAR" />
+    <result column="apply_time" property="applyTime" jdbcType="TIMESTAMP" />
+    <result column="handle_man" property="handleMan" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="repair_time" property="repairTime" jdbcType="TIMESTAMP" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, device_id, device_no, proposer, apply_time, handle_man, status, repair_time, 
+    remark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from tb_device_repair
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_device_repair
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.keng.main.entity.DeviceRepair" >
+    insert into tb_device_repair (id, device_id, device_no, 
+      proposer, apply_time, handle_man, 
+      status, repair_time, remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, #{deviceNo,jdbcType=VARCHAR}, 
+      #{proposer,jdbcType=VARCHAR}, #{applyTime,jdbcType=TIMESTAMP}, #{handleMan,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{repairTime,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.DeviceRepair" >
+    insert into tb_device_repair
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="deviceNo != null" >
+        device_no,
+      </if>
+      <if test="proposer != null" >
+        proposer,
+      </if>
+      <if test="applyTime != null" >
+        apply_time,
+      </if>
+      <if test="handleMan != null" >
+        handle_man,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="repairTime != null" >
+        repair_time,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNo != null" >
+        #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="proposer != null" >
+        #{proposer,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleMan != null" >
+        #{handleMan,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="repairTime != null" >
+        #{repairTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.DeviceRepair" >
+    update tb_device_repair
+    <set >
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceNo != null" >
+        device_no = #{deviceNo,jdbcType=VARCHAR},
+      </if>
+      <if test="proposer != null" >
+        proposer = #{proposer,jdbcType=VARCHAR},
+      </if>
+      <if test="applyTime != null" >
+        apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="handleMan != null" >
+        handle_man = #{handleMan,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="repairTime != null" >
+        repair_time = #{repairTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.DeviceRepair" >
+    update tb_device_repair
+    set device_id = #{deviceId,jdbcType=INTEGER},
+      device_no = #{deviceNo,jdbcType=VARCHAR},
+      proposer = #{proposer,jdbcType=VARCHAR},
+      apply_time = #{applyTime,jdbcType=TIMESTAMP},
+      handle_man = #{handleMan,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      repair_time = #{repairTime,jdbcType=TIMESTAMP},
+      remark = #{remark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

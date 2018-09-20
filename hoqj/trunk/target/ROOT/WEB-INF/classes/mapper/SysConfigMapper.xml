@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.SysConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.SysConfig" >
+    <result column="cfg_id" property="cfgId" jdbcType="VARCHAR" />
+    <result column="cfg_key" property="cfgKey" jdbcType="VARCHAR" />
+    <result column="cfg_val" property="cfgVal" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="parent_cfg" property="parentCfg" jdbcType="VARCHAR" />
+    <result column="parent_key" property="parentKey" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cfg_id, cfg_key, cfg_val, remark, parent_cfg, parent_key, status, sort
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.keng.main.entity.SysConfigKey" >
+    select <include refid="Base_Column_List" /> from sys_config where cfg_id = #{cfgId,jdbcType=VARCHAR} and cfg_key = #{cfgKey,jdbcType=VARCHAR}
+  </select>
+  <select id="selectPager" resultMap="BaseResultMap" parameterType="map">
+    SELECT <include refid="Base_Column_List" /> FROM sys_config
+    <where>
+        <if test="cfgId != null">AND cfg_id = #{cfgId,jdbcType=VARCHAR}</if>
+        <if test="cfgKey != null">AND cfg_key = #cfgKey,jdbcType=VARCHAR}</if>
+        <if test="remark != null">AND remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')</if>
+        <if test="parentCfg != null">AND parent_cfg = #{parentCfg,jdbcType=VARCHAR}</if>
+        <if test="parentKey != null">AND parent_key = #{parentKey,jdbcType=VARCHAR}</if>
+        <if test="status != null">AND status = #{status,jdbcType=INTEGER}</if>
+    </where>
+    ORDER BY cfg_id ASC, sort ASC limit #{begRow}, #{pageSize}
+  </select>
+  <select id="selectPagerCount" resultType="java.lang.Integer" parameterType="map">
+    SELECT count(0) as count FROM sys_config
+    <where>
+        <if test="cfgId != null">AND cfg_id = #{cfgId,jdbcType=VARCHAR}</if>
+        <if test="cfgKey != null">AND cfg_key = #cfgKey,jdbcType=VARCHAR}</if>
+        <if test="remark != null">AND remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')</if>
+        <if test="parentCfg != null">AND parent_cfg = #{parentCfg,jdbcType=VARCHAR}</if>
+        <if test="parentKey != null">AND parent_key = #{parentKey,jdbcType=VARCHAR}</if>
+        <if test="status != null">AND status = #{status,jdbcType=INTEGER}</if>
+    </where>
+    ORDER BY cfg_id ASC, sort ASC 
+  </select>
+  
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="map">
+    SELECT <include refid="Base_Column_List" /> FROM sys_config
+    <where>
+        <if test="cfgId != null">AND cfg_id = #{cfgId,jdbcType=VARCHAR}</if>
+        <if test="cfgKey != null">AND cfg_key = #{cfgKey,jdbcType=VARCHAR}</if>
+        <if test="remark != null">AND remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')</if>
+        <if test="parentCfg != null">AND parent_cfg = #{parentCfg,jdbcType=VARCHAR}</if>
+        <if test="parentKey != null">AND parent_key = #{parentKey,jdbcType=VARCHAR}</if>
+        <if test="status != null">AND status = #{status,jdbcType=INTEGER}</if>
+    </where>
+    ORDER BY cfg_id ASC, sort ASC
+    <if test="begRow != null and pageSize != null">
+        limit #{begRow}, #{pageSize}
+    </if>
+  </select>
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="map">
+    SELECT <include refid="Base_Column_List" /> FROM sys_config
+    <where>
+        <if test="cfgId != null">AND cfg_id = #{cfgId,jdbcType=VARCHAR}</if>
+        <if test="cfgKey != null">AND cfg_key = #{cfgKey,jdbcType=VARCHAR}</if>
+        <if test="remark != null">AND remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')</if>
+        <if test="parentCfg != null">AND parent_cfg = #{parentCfg,jdbcType=VARCHAR}</if>
+        <if test="parentKey != null">AND parent_key = #{parentKey,jdbcType=VARCHAR}</if>
+        <if test="status != null">AND status = #{status,jdbcType=INTEGER}</if>
+    </where>
+    ORDER BY cfg_id ASC, sort ASC
+    <if test="begRow != null and pageSize != null">
+        limit #{begRow}, #{pageSize}
+    </if>
+  </select>
+  <select id="selectByParamsCount" resultType="java.lang.Integer" parameterType="map">
+    SELECT COUNT(*) AS COUNT FROM sys_config
+    <where>
+        <if test="cfgId != null">AND cfg_id = #{cfgId,jdbcType=VARCHAR}</if>
+        <if test="cfgKey != null">AND cfg_key = #{cfgKey,jdbcType=VARCHAR}</if>
+        <if test="remark != null">AND remark LIKE CONCAT('%',#{remark,jdbcType=VARCHAR},'%')</if>
+        <if test="parentCfg != null">AND parent_cfg = #{parentCfg,jdbcType=VARCHAR}</if>
+        <if test="parentKey != null">AND parent_key = #{parentKey,jdbcType=VARCHAR}</if>
+        <if test="status != null">AND status = #{status,jdbcType=INTEGER}</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.keng.main.entity.SysConfigKey" >
+    delete from sys_config where cfg_id = #{cfgId,jdbcType=VARCHAR} and cfg_key = #{cfgKey,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keng.main.entity.SysConfig" >
+    insert into sys_config (cfg_id, cfg_key, cfg_val, remark, parent_cfg, parent_key, status, sort)
+    values (#{cfgId,jdbcType=VARCHAR}, #{cfgKey,jdbcType=VARCHAR}, #{cfgVal,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{parentCfg,jdbcType=VARCHAR}, #{parentKey,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.SysConfig" >
+    insert into sys_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cfgId != null" >
+        cfg_id,
+      </if>
+      <if test="cfgKey != null" >
+        cfg_key,
+      </if>
+      <if test="cfgVal != null" >
+        cfg_val,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="parentCfg != null" >
+        parent_cfg,
+      </if>
+      <if test="parentKey != null" >
+        parent_key,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cfgId != null" >
+        #{cfgId,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgKey != null" >
+        #{cfgKey,jdbcType=VARCHAR},
+      </if>
+      <if test="cfgVal != null" >
+        #{cfgVal,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCfg != null" >
+        #{parentCfg,jdbcType=VARCHAR},
+      </if>
+      <if test="parentKey != null" >
+        #{parentKey,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.SysConfig" >
+    update sys_config
+    <set >
+      <if test="cfgVal != null" >
+        cfg_val = #{cfgVal,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCfg != null" >
+        parent_cfg = #{parentCfg,jdbcType=VARCHAR},
+      </if>
+      <if test="parentKey != null" >
+        parent_key = #{parentKey,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cfg_id = #{cfgId,jdbcType=VARCHAR}
+      and cfg_key = #{cfgKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.SysConfig" >
+    update sys_config
+    set cfg_val = #{cfgVal,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      parent_cfg = #{parentCfg,jdbcType=VARCHAR},
+      parent_key = #{parentKey,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      sort = #{sort,jdbcType=INTEGER}
+    where cfg_id = #{cfgId,jdbcType=VARCHAR}
+      and cfg_key = #{cfgKey,jdbcType=VARCHAR}
+  </update>
+</mapper>

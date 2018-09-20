@@ -1,0 +1,156 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>设备管理</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div><span style="float: right;line-height:100%"></span></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                	<!-- <span class="spacing"><label>科室：</label><input type="text" name="nick"/></span> -->
+                	<span class="spacing"><label>设备编号：</label><input type="text" name="deviceNo"/></span>
+                    <span class="spacing"><label>科室：</label><input type="text" name="deptName"/></span>
+                    <span class="spacing"><label>IP：</label><input type="text" name="ip"/></span>
+                    <span class="spacing"><label>MAC：</label><input type="text" name="mac" style="width: 120px"/></span>
+					<span class="spacing"><label>设备类型：</label>
+						<select name="type" class="easyui-combobox" style="width: 100px">
+							<option value="">==请选择==</option>
+							<option value="1">台式机</option>
+							<option value="2">笔记本</option>
+							<option value="3">打印机</option>
+							<option value="4">交换机</option>
+							<option value="5">服务器</option>
+							<option value="6">硬盘</option>
+							<option value="7">其他</option>
+						</select> 
+					</span> 
+                    <span class="spacing"><label>状态：</label><select name="status"><option value="">==请选择==</option><option value="1">正常</option><option value="0">停用</option></select></span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                </form>
+            </div>
+        </div>
+        <table id="grid" data-options="url:'device/list.html',method:'post'" title="设备列表">
+            <thead>
+            	<th data-options="field:'deviceNo',width:80,resizable:true,align:'left'">设备编号</th>
+            	<th data-options="field:'brand',width:80,resizable:true,align:'left'">设备品牌</th>
+            	<th data-options="field:'deptName',width:80,resizable:true,align:'left'">科室</th>
+                <th data-options="field:'type',width:80,resizable:true,align:'left',formatter:formatter.type">设备类型</th>
+                <th data-options="field:'netType',width:80,resizable:true,align:'left'">网络类型</th>
+                <th data-options="field:'price',width:80,resizable:true,align:'left'">价格</th>
+                <th data-options="field:'officeSoft',width:80,resizable:true,align:'left'">办公软件</th>
+                <th data-options="field:'operatingSoft',width:80,resizable:true,align:'left'">操作系统</th>
+                <th data-options="field:'antiVirusSoft',width:80,resizable:true,align:'left'">杀毒软件</th>
+                <th data-options="field:'location',width:80,resizable:true,align:'left'">位置</th>
+                <th data-options="field:'buyTime',width:80,resizable:true,align:'left'">采购时间</th>
+                <th data-options="field:'ip',width:80,resizable:true,align:'left'">IP</th>
+                <th data-options="field:'mac',width:80,resizable:true,align:'left'">MAC</th>
+                <th data-options="field:'specification',width:80,resizable:true,align:'left'">配置</th>
+                <th data-options="field:'registrationTime',width:100,resizable:true,align:'center'">登记时间</th>
+                <th data-options="field:'remark',width:100,resizable:true,align:'center'">备注</th>
+                <th data-options="field:'status',width:30,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'opt',width:100,resizable:true,align:'center',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    <div class="hide-panel">
+        <div id="deviceEditDialog" style="width:600px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="deviceEditForm" class="form_style" method="post" onsubmit="return false;">
+                <input type="hidden" name="id" id="id" />
+                <input type="hidden" name="deptName" id="deptName" />
+                <div class="form-field">
+                    <label for="deviceNo">设备编号：<font color="red"></font></label>
+                    <input class="easyui-validatebox"  type="text" name="deviceNo" id="deviceNo" maxlength="30"  />
+                    <label for="deptId">科室：<font color="red">*</font></label>
+                    <select name="deptId" id="deptId" onchange="setDeptName()" style="width:200px">
+                    <#if Depts?? && Depts?size gt 0>
+					 	<#list Depts as r>
+							<option value="${r.c_id?trim}">${r.c_name}</option> 
+						</#list> 
+					</#if>
+					</select>
+                </div>
+                <div class="form-field">
+                    <label for="type">设备类型：<font color="red">*</font></label>
+                    <select name="type" class="easyui-combobox" style="width: 150px">
+							<option value="">==请选择==</option>
+							<option value="1">台式机</option>
+							<option value="2">笔记本</option>
+							<option value="3">打印机</option>
+							<option value="4">交换机</option>
+							<option value="5">服务器</option>
+							<option value="6">硬盘</option>
+							<option value="7">其他</option>
+						</select> 
+                    <label for="registrationTime">登记时间：<font color="red">*</font></label>
+                    <input class="easyui-datetimebox easyui-validatebox" id="registrationTime" name="registrationTime" value="${registrationTime!''}" style="width: 150px"/>
+                </div>
+                <div class="form-field">
+                    <label for="brand">品牌：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="brand" id="brand"  />
+                    <label for="netType">网络类型：<font color="red"></font></label>
+                    <input type="radio" name="netType" value="1" checked="checked" /><span class="check-label">内网</span>
+                    <input type="radio" name="netType" value="2" /><span  class="check-label">外网</span>
+                </div>
+                <div class="form-field">
+                    <label for="ip">IP：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="ip" id="ip"  />
+                    <label for="mac">MAC：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="mac" id="mac" />
+                </div>
+                <div class="form-field">
+                    <label for="price">价格：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="price" id="price"  />
+                    <label for="pcName">计算机名：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="pcName" id="pcName" />
+                </div>
+                <div class="form-field">
+                    <label for="operatingSoft">操作系统：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="operatingSoft" id="operatingSoft"  />
+                    <label for="antiVirusSoft">杀毒软件：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="antiVirusSoft" id="antiVirusSoft" />
+                </div>
+                <div class="form-field">
+                    <label for="applier">申请人：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="applier" id="applier" />
+                    <label for="applyTime">申请时间：<font color="red">*</font></label>
+                    <input class="easyui-datetimebox easyui-validatebox" id="applyTime" name="applyTime" value="${applyTime!''}" style="width: 150px"/>
+                </div>
+                <div class="form-field">
+                    <label for="officeSoft">办公软件：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="officeSoft" id="officeSoft" />
+                    <label for="status">状态：<font color="red">*</font></label>
+                    <input type="radio" name="status" value="1" checked="checked" /><span class="check-label">正常</span>
+                    <input type="radio" name="status" value="0" /><span  class="check-label">报损</span>
+                </div>
+                <div class="form-field">
+                	<label for="user">使用人：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="user" id="user" />
+                    <label for="buyTime">采购时间：<font color="red">*</font></label>
+                    <input class="easyui-datetimebox easyui-validatebox" id="buyTime" name="buyTime" value="${buyTime!''}" style="width: 150px"/>
+                </div>
+                <div class="form-field">
+                    <label for="scraper">报损人员：<font color="red"></font></label>
+                    <input class="easyui-validatebox" type="text" name="scraper" id="scraper" />
+                    <label for="scrapTime">报损时间：<font color="red">*</font></label>
+                    <input class="easyui-datetimebox easyui-validatebox" id="scrapTime" name="scrapTime" value="${scrapTime!''}" style="width: 150px"/>
+                </div>
+                <div class="form-field">
+                    <label for="location">位置：<font color="red">*</font></label>
+                    <textarea name="location" id="location" style="margin: 0px; height: 51px; width: 145px;">${location!''}</textarea>
+                    <label for="specification">配置：<font color="red"></font></label>
+                    <textarea name="specification" id="specification" style="margin: 0px; height: 51px; width: 145px;">${specification!''}</textarea>
+                </div>
+                <div class="form-field">
+                    <label for="remark">备注：<font color="red"></font></label>
+                    <textarea name="remark" id="remark" style="margin: 0px; height: 51px; width: 145px;">${remark!''}</textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>

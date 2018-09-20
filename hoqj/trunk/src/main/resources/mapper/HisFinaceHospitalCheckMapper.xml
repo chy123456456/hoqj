@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.HisFinaceHospitalCheckMapper" >
+
+  <select id="getMz" resultType="map" parameterType="map">
+    SELECT                                                                                                                                                                                                                                                       
+	 	u_reg_out.c_id,                                                                                                                                                                                                                                   
+	 	u_reg_out.c_br_id,                                                                                                                                                                                                                                
+	 	u_reg_out.c_code ,                                                                                                                                                                                                                                
+	 	u_pat_out.c_age ,                                                                                                                                                                                                                                
+	 	convert(varchar,u_pat_out.c_birthday,111) c_birthday,                                                                                                                                                                                                                            
+	 	u_pat_out.c_sex ,                                                                                                                                                                                                                                 
+	 	u_reg_out.c_mz_zd_new ,                                                                                                                                                                                                                           
+	 	'' 'icdbm' ,                                                                                                                                                                                                                                      
+	 	convert(varchar,u_reg_out.c_op_date,111) c_op_date,                                                                                                                                                                                                                             
+	 	p_deptemp.c_name ,                                                                                                                                                                                                                                
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id),0) 'mzzfy',                                                              
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id AND u_jzsfk_d.c_fym_kmid IN ('6','41','48','49','51','61','69')),0) 'zlf',
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id AND u_jzsfk_d.c_fym_kmid IN ('1','3','4','52','53','54')),0) 'ypf',       
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id AND u_jzsfk_d.c_fym_kmid IN ('1','52')),0) 'xy',                          
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id AND u_jzsfk_d.c_fym_kmid IN ('3','53')),0) 'zchengy',                     
+	 	isnull((SELECT sum(isnull(u_jzsfk_d.c_cost_ss*u_jzsfk_m.c_io_flag,0)) FROM u_jzsfk_m,u_jzsfk_d WHERE u_jzsfk_m.c_id = u_jzsfk_d.c_bill_id AND c_reg_id = u_reg_out.c_id AND u_jzsfk_d.c_fym_kmid IN ('4','55')),0) 'zcaoy',                       
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid='19'),0) 'ghf',                                                                                                                          
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid='33'),0) 'zcf',                                                                                                                          
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid in('2','15','26','27','28','29','30','31','35','ZZ01','44')),0) 'jcf',                                                                                                                           
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid IN('10','49')),0) 'ssf',                                                                                                                 
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid = '32'),0) 'hyf',                                                                                                                 
+	 	isnull((SELECT sum(c_cost_ss*c_io_flag) FROM u_jzsfk_m WHERE c_reg_id = u_reg_out.c_id AND c_fym_fp_kmid not IN('19','33','2','15','26','27','28','29','30','31','35','ZZ01','44','10','49','32','1','3','4','52','53','54')),0) 'qtf',                                                                                                            
+	 	CASE (SELECT max(js.c_ybhytype) FROM y_yb_js js WHERE js.c_reg_id = u_reg_out.c_id 
+	 	 <!-- <![CDATA[AND js.c_jz_date > #{bDate,jdbcType=TIMESTAMP}]]>     
+	     <![CDATA[AND js.c_jz_date < #{eDate,jdbcType=TIMESTAMP}]]>   -->
+	 	) WHEN 'zgyb' THEN '职工医保' WHEN 'hzyl' THEN '合作医疗' ELSE '' END 'cblx',                                                                                   
+	 	isnull((SELECT sum(isnull(js.c_tc_zf,0)) FROM y_yb_js js WHERE js.c_reg_id = u_reg_out.c_id),0) 'bxtcjjzffy',                                                                                                                                     
+	 	isnull((SELECT sum(isnull(js.c_zf_zf,0)) FROM y_yb_js js WHERE js.c_reg_id = u_reg_out.c_id),0) 'grzhzffy',                                                                                                                                       
+	 	CASE WHEN (SELECT count(1) FROM y_yb_js js WHERE js.c_reg_id = u_reg_out.c_id)>0 THEN isnull((SELECT sum(isnull(js.c_xj_zf,0)) FROM y_yb_js js WHERE js.c_reg_id = u_reg_out.c_id),0)  ELSE (SELECT isnull(sum(isnull(u_jzsfk_m.c_io_flag*u_jzsfk_m.c_cost_ss,0)),0) FROM u_jzsfk_m WHERE u_jzsfk_m.c_reg_id = u_reg_out.c_id) END 'hzzffy',                                                                                                                    
+	 	'' 'yljzfd'                                                                                                                                                                                                                                       
+	 FROM                                                                                                                                                                                                                                                 
+	 	                                                                                                                                                                                                                                                  
+	 	u_pat_out,                                                                                                                                                                                                                                        
+	 	p_deptemp,                                                                                                                                                                                                                                        
+	 	u_reg_out                                                                                                                                                                                                                                         
+	 WHERE                                                                                                                                                                                                                                                
+	 	u_reg_out.c_br_id = u_pat_out.c_id       
+	 <![CDATA[AND u_reg_out.c_op_date > #{bDate,jdbcType=TIMESTAMP}]]>     
+	 <![CDATA[AND u_reg_out.c_op_date < #{eDate,jdbcType=TIMESTAMP}]]>                                                                                                                                                                                                    
+	 AND p_deptemp.c_id = u_reg_out.c_dept_id              
+  </select>
+  	
+</mapper>

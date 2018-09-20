@@ -1,0 +1,62 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>预算管理</title>
+<#include "/pager/common/quote.html" />
+<link rel="stylesheet" href="${base}/assets/common/treeview/jquery.treeview.css" />
+<link rel="stylesheet" href="${base}/assets/common/treeview/screen.css" />
+<script src="${base}/assets/common/treeview/jquery.cookie.js"></script>
+<script src="${base}/assets/common/treeview/jquery.treeview.js"></script>
+<script type="text/javascript" src="${base}/assets/common/treeview/demo.js"></script>
+<script src="${base}/assets/common/zxxFile.js"></script>
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+               <form onsubmit="return false;" id="queryForm" class="form_style">
+					<span class="spacing"><label>申请单号：</label><input type="text" name="sqdq" style="width: 120px" id="sqdq"/></span> 
+					<span class="spacing"><label>患者姓名：</label><input type="text" name="hzq" style="width: 120px" id="hzq"/></span>
+					<span class="spacing"><label>住院号：</label><input type="text" name="zyhq" style="width: 120px" id="zyhq"/></span> 
+					<span class="spacing"><input type="submit" id="queryButton" value="查询" /></span>
+				</form>
+				<label for="shopCover">封面图片：</label>
+                <span class="spacing"><input type="button" value="上传封面" id="phoAdd"> </span>
+                <span>
+                	<input type="hidden" id="shopCover" name="shopCover">
+                 <img id="imagePhoto" height="70" width="100">
+                 <input id="fileImage" type="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" size="30" name="fileselect[]" />
+                </span>
+            </div>
+        </div>
+        <!-- <table id="grid"   title="标本列表"> -->
+            <div class="panel-content" id="roleMgrPanel">
+				<!-- <h4>Sample 1 - default</h4> -->
+				<ul id="browser" class="filetree">
+					<li><span class="folder">Folder 1</span>
+						<ul>
+							<li><span class="file">Item 1.1</span></li>
+						</ul></li>
+					<li><span class="folder">Folder 2</span>
+						<ul>
+							<li><span class="folder">Subfolder 2.1</span>
+								<ul id="folder21">
+									<li><span class="55">File 2.1.1</span><input type="text"></input></li>
+									<li><span class="file">File 2.1.2</span></li>
+								</ul></li>
+							<li><span class="file">File 2.2</span></li>
+						</ul></li>
+					<li class="closed"><span class="folder">Folder 3
+							(closed at start)</span>
+						<ul>
+							<li><span class="file">File 3.1</span></li>
+						</ul></li>
+					<li><span class="file">File 4</span></li>
+				</ul>
+			</div>
+    </div>
+</body>
+</html>
+</@compress>

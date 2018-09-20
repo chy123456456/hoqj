@@ -1,0 +1,32 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>医院调查表-门诊</title> <#include "/pager/common/quote.html" />
+<script src="${base}/assets/common/zxxFile.js"></script>
+</head>
+<body>
+<script>
+</script>
+	<div class="body-center">
+		<div class="html-panel query-panel" id="query_con">
+			<div class="panel-header">
+				<div class="panel-title">查询条件</div>
+			</div>
+			<div class="panel-content" id="menuMgrPanel">
+				<form onsubmit="return false;" id="queryForm" class="form_style">
+					<span class="spacing"><label>开始时间：</label>
+						<input class="easyui-datetimebox easyui-validatebox" id="bDate" name="bDate" value="${bDate!''}" style="width: 150px"/>
+					</span> 
+					<span class="spacing"><label>结束时间：</label>
+						<input class="easyui-datetimebox easyui-validatebox" id="eDate" name="eDate" value="${eDate!''}" style="width: 150px"/>
+					</span> 
+					<!-- <span class="spacing"><input type="submit" id="queryButton" value="查询" /></span> -->
+					<span class="spacing"><input type="button" id="excelExport" value="导出" /></span>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+</@compress>

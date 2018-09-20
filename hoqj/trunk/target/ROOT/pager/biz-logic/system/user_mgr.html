@@ -1,0 +1,74 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>用户管理</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                	<!-- <span class="spacing"><label>科室：</label><input type="text" name="nick"/></span> -->
+                    <span class="spacing"><label>姓名：</label><input type="text" name="username"/></span>
+                    <span class="spacing"><label>编码：</label><input type="text" name="code"/></span>
+                    <span class="spacing"><label>状态：</label><select name="status"><option value="">==请选择==</option><option value="1">正常</option><option value="0">停用</option></select></span>
+                    <span class="spacing"><label>角色：</label>
+                       <select name="roleId">
+                          <option value="">==请选择==</option>
+                           <#if allRole?? && allRole?size gt 0>
+	                        <#list allRole as r>
+	                        <option value="${r.roleId}">${r.roleName}</option>
+	                        </#list>
+	                        </#if>
+                       </select>
+                    </span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                </form>
+            </div>
+        </div>
+        <table id="grid" data-options="url:'user/list.html',method:'post'" title="用户列表">
+            <thead>
+            	<th data-options="field:'code',width:80,resizable:true,align:'left'">登录账号</th>
+                <th data-options="field:'name',width:80,resizable:true,align:'left'">用户名</th>
+                <th data-options="field:'status',width:30,resizable:true,align:'left',formatter:formatter.status">状态</th>
+                <th data-options="field:'roles',width:80,resizable:true,align:'left',formatter:formatter.roles">角色</th>
+                <th data-options="field:'opt',width:100,resizable:true,align:'center',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    <div class="hide-panel">
+        <div id="userEditDialog" style="width:430px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="userEditForm" class="form_style" method="post" onsubmit="return false;">
+                <input type="hidden" name="id" id="id" />
+                <div class="form-field">
+                    <label for="name">姓名：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="name" id="name" maxlength="30" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="code">编码：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="code" maxlength="30" data-options="required:true"/>
+                </div>
+                <div class="form-field">
+                    <label for="sex">性别：<font color="red">*</font></label>
+                    <input type="radio" name="sex" value="1" checked="checked" /><span class="check-label">男</span>
+                    <input type="radio" name="sex" value="2" /><span  class="check-label">女</span>
+                </div>
+                <div class="form-field">
+                    <label for="roleId">角色：<font color="red">*</font></label>
+                    <input class="easyui-validatebox" type="text" name="roleId" id="roleId" data-options="required:true" />
+                </div>
+                <div class="form-field">
+                    <label for="status">状态：<font color="red">*</font></label>
+                    <input type="radio" name="status" value="1" checked="checked" /><span class="check-label">正常</span>
+                       <input type="radio" name="status" value="0" /><span  class="check-label">停用</span>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>

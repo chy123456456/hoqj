@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xsi:schemaLocation=" 
+          http://www.springframework.org/schema/beans 
+          http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+          http://www.springframework.org/schema/tx 
+          http://www.springframework.org/schema/tx/spring-tx-3.0.xsd 
+          http://www.springframework.org/schema/context 
+          http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+          http://www.springframework.org/schema/aop 
+          http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+  <!-- mysql数据库配置 -->
+  <bean name="dataSourceMysql" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${jdbc.driverClassName}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+    <!--initialSize: 初始化连接 -->
+    <property name="initialSize" value="${jdbc.initialSize}" />
+    <!--minIdle: 最小空闲连接 -->
+    <property name="minIdle" value="${jdbc.minIdle}" />
+    <!--maxIdle: 最大空闲连接 -->
+    <property name="maxIdle" value="${jdbc.maxIdle}" />
+    <!--maxActive: 最大连接数量 -->
+    <property name="maxActive" value="${jdbc.maxActive}" />
+    <!--removeAbandoned: 是否自动回收超时连接 -->
+    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+    <!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+    <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+    <property name="maxWait" value="${jdbc.maxWait}" />
+    <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+    <!-- 连接测试 -->
+    <property name="validationQuery" value="${jdbc.validationQuery}" />
+    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+    <!-- 检查一次连接池中空闲的连接 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+    <!-- 连接池中连接可空闲的时间 -->
+    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+  </bean>
+  <!-- sybase数据库配置 -->
+  <bean name="dataSource_sybase" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${sysbaseDriver}" />
+    <property name="url" value="${sysbaseConnectUrl}" />
+    <property name="username" value="${sysbaseUser}" />
+    <property name="password" value="${sysbasePassword}" />
+    <!--initialSize: 初始化连接 -->
+    <property name="initialSize" value="${jdbc.initialSize}" />
+    <!--minIdle: 最小空闲连接 -->
+    <property name="minIdle" value="${jdbc.minIdle}" />
+    <!--maxIdle: 最大空闲连接 -->
+    <property name="maxIdle" value="${jdbc.maxIdle}" />
+    <!--maxActive: 最大连接数量 -->
+    <property name="maxActive" value="${jdbc.maxActive}" />
+    <!--removeAbandoned: 是否自动回收超时连接 -->
+    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+    <!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+    <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+    <property name="maxWait" value="${jdbc.maxWait}" />
+    <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+    <!-- 连接测试 -->
+    <property name="validationQuery" value="${jdbc.validationQuery}" />
+    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+    <!-- 检查一次连接池中空闲的连接 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+    <!-- 连接池中连接可空闲的时间 -->
+    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+  </bean>
+  <!-- lis_sqlserver数据库配置 -->
+  <bean name="lis_dataSource_sqlserver" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${sqlserverDriver}" />
+    <property name="url" value="${lis_sqlserverConnectUrl}" />
+    <property name="username" value="${lis_sqlserverUser}" />
+    <property name="password" value="${lis_sqlserverPassword}" />
+    <!--initialSize: 初始化连接 -->
+    <property name="initialSize" value="${jdbc.initialSize}" />
+    <!--minIdle: 最小空闲连接 -->
+    <property name="minIdle" value="${jdbc.minIdle}" />
+    <!--maxIdle: 最大空闲连接 -->
+    <property name="maxIdle" value="${jdbc.maxIdle}" />
+    <!--maxActive: 最大连接数量 -->
+    <property name="maxActive" value="${jdbc.maxActive}" />
+    <!--removeAbandoned: 是否自动回收超时连接 -->
+    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+    <!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+    <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+    <property name="maxWait" value="${jdbc.maxWait}" />
+    <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+    <!-- 连接测试 -->
+    <property name="validationQuery" value="${jdbc.validationQuery}" />
+    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+    <!-- 检查一次连接池中空闲的连接 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+    <!-- 连接池中连接可空闲的时间 -->
+    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+  </bean>
+  <!-- 短信平台sqlserver数据库配置 -->
+  <bean name="dxpt_dataSource_sqlserver" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${sqlserverDriver}" />
+    <property name="url" value="${dxpt_sqlserverConnectUrl}" />
+    <property name="username" value="${dxpt_sqlserverUser}" />
+    <property name="password" value="${dxpt_sqlserverPassword}" />
+    <!--initialSize: 初始化连接 -->
+    <property name="initialSize" value="${jdbc.initialSize}" />
+    <!--minIdle: 最小空闲连接 -->
+    <property name="minIdle" value="${jdbc.minIdle}" />
+    <!--maxIdle: 最大空闲连接 -->
+    <property name="maxIdle" value="${jdbc.maxIdle}" />
+    <!--maxActive: 最大连接数量 -->
+    <property name="maxActive" value="${jdbc.maxActive}" />
+    <!--removeAbandoned: 是否自动回收超时连接 -->
+    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+    <!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+    <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+    <property name="maxWait" value="${jdbc.maxWait}" />
+    <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+    <!-- 连接测试 -->
+    <property name="validationQuery" value="${jdbc.validationQuery}" />
+    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+    <!-- 检查一次连接池中空闲的连接 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+    <!-- 连接池中连接可空闲的时间 -->
+    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+  </bean>
+  <!--老his zdhris6_sqlserver数据库配置 -->
+  <bean name="zdhris6_dataSource_sqlserver" class="org.apache.commons.dbcp.BasicDataSource">
+    <property name="driverClassName" value="${sqlserverDriver}" />
+    <property name="url" value="${zdhris6_sqlserverConnectUrl}" />
+    <property name="username" value="${zdhris6_sqlserverUser}" />
+    <property name="password" value="${zdhris6_sqlserverPassword}" />
+    <!--initialSize: 初始化连接 -->
+    <property name="initialSize" value="${jdbc.initialSize}" />
+    <!--minIdle: 最小空闲连接 -->
+    <property name="minIdle" value="${jdbc.minIdle}" />
+    <!--maxIdle: 最大空闲连接 -->
+    <property name="maxIdle" value="${jdbc.maxIdle}" />
+    <!--maxActive: 最大连接数量 -->
+    <property name="maxActive" value="${jdbc.maxActive}" />
+    <!--removeAbandoned: 是否自动回收超时连接 -->
+    <property name="removeAbandoned" value="${jdbc.removeAbandoned}" />
+    <!--removeAbandonedTimeout: 超时时间(以秒数为单位) -->
+    <property name="removeAbandonedTimeout" value="${jdbc.removeAbandonedTimeout}" />
+    <!--maxWait: 超时等待时间以毫秒为单位 6000毫秒/1000等于60秒 -->
+    <property name="maxWait" value="${jdbc.maxWait}" />
+    <property name="defaultAutoCommit" value="${jdbc.defaultAutoCommit}" />
+    <!-- 连接测试 -->
+    <property name="validationQuery" value="${jdbc.validationQuery}" />
+    <property name="testWhileIdle" value="${jdbc.testWhileIdle}" />
+    <!-- 检查一次连接池中空闲的连接 -->
+    <property name="timeBetweenEvictionRunsMillis" value="${jdbc.timeBetweenEvictionRunsMillis}" />
+    <!-- 连接池中连接可空闲的时间 -->
+    <property name="minEvictableIdleTimeMillis" value="${jdbc.minEvictableIdleTimeMillis}" />
+    <property name="testOnBorrow" value="${jdbc.testOnBorrow}" />
+  </bean>
+  
+  <bean id="dataSource" class="com.keng.base.common.DbcontextHolder"><!-- 这里写选择数据源的类地址 下面跟着给出-->
+        <property name="defaultTargetDataSource" ref="dataSourceMysql"/><!-- 设置默认为此mySqlDataSource数据源-->
+        <property name="targetDataSources">
+            <map>
+                <entry key="dataSourceMysql" value-ref="dataSourceMysql"/>
+                <entry key="dataSource_sybase" value-ref="dataSource_sybase"/>
+                <entry key="lis_dataSource_sqlserver" value-ref="lis_dataSource_sqlserver"/>
+                <entry key="dxpt_dataSource_sqlserver" value-ref="dxpt_dataSource_sqlserver"/>
+                <entry key="zdhris6_dataSource_sqlserver" value-ref="zdhris6_dataSource_sqlserver"/>
+            </map>
+        </property>
+    </bean>
+
+  <bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+    <property name="properties">
+      <bean class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+        <property name="properties">
+          <props>
+            <prop key="Oracle">oracle</prop>
+            <prop key="MySQL">mysql</prop>
+            <prop key="DB2">db2</prop>
+            <prop key="Adaptive Server Enterprise">sybase</prop>
+            <prop key="SQL Server">sqlserver</prop>
+          </props>
+        </property>
+      </bean>
+    </property>
+  </bean>
+
+  <!-- 注意：修改configLocation及mapperLocations对应的文件路径 -->
+  <bean name="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="configLocation" value="classpath:mybatis-config.xml" />
+    <property name="mapperLocations" value="classpath:mapper/*Mapper.xml" />
+    <property name="databaseIdProvider" ref="databaseIdProvider" />
+  </bean>
+  
+  <!-- sybase配置 -->
+  <!-- <bean id="sqlSessionFactory_sybase" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource_c" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+    </bean> -->
+
+  <!-- 注意：修改basePackage为对应mapper包名 -->
+  <bean name="mapper" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="com.keng.main.mapper" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+  </bean>
+
+  <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+    <constructor-arg index="0" ref="sqlSessionFactory" />
+  </bean>
+  <!-- sybase配置 -->
+  <!-- <bean id="sqlSession_sybase" class="org.mybatis.spring.SqlSessionTemplate"
+        scope="prototype">
+        <constructor-arg index="0" ref="sqlSessionFactory_sybase" />
+   </bean> -->
+
+  <!-- 配置事物 -->
+  <bean name="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <tx:annotation-driven transaction-manager="transactionManager" />
+  <!-- 多数据源事务管理使用Atomikos -->
+
+  <!-- 自动拦截Service方法事务管理 -->
+  <bean id="transactionInterceptor" class="org.springframework.transaction.interceptor.TransactionInterceptor">
+    <property name="transactionManager" ref="transactionManager" />
+    <property name="transactionAttributes">
+      <props>
+        <prop key="load*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="find*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="list*">PROPAGATION_REQUIRED,readOnly</prop>
+        <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+        <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+        <prop key="modify*">PROPAGATION_REQUIRED,-Exception</prop>
+        <prop key="delete*">PROPAGATION_REQUIRED,-Exception</prop>
+        <prop key="remove*">PROPAGATION_REQUIRED,-Exception</prop>
+        <prop key="noTran*">PROPAGATION_NOT_SUPPORTED</prop>
+      </props>
+    </property>
+  </bean>
+
+  <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+<!--     <property name="beanNames"> -->
+<!--       <list> -->
+<!--       </list> -->
+<!--     </property> -->
+    <property name="interceptorNames">
+      <list>
+        <value>transactionInterceptor</value>
+      </list>
+    </property>
+  </bean>
+</beans>

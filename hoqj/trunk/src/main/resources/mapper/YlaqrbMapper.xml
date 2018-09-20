@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.YlaqrbMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.Ylaqrb" >
+    <result column="ks" property="ks" jdbcType="NCHAR" />
+    <result column="sbry" property="sbry" jdbcType="NCHAR" />
+    <result column="flag" property="flag" jdbcType="NCHAR" />
+    <result column="ylaqyh" property="ylaqyh" jdbcType="NCHAR" />
+    <result column="yljfyh" property="yljfyh" jdbcType="NCHAR" />
+    <result column="yljf" property="yljf" jdbcType="NCHAR" />
+    <result column="ksjy" property="ksjy" jdbcType="NCHAR" />
+    <result column="sbrq" property="sbrq" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.keng.main.entity.Ylaqrb" >
+    insert into ylaqrb (ks, sbry, flag, ylaqyh, 
+      yljfyh, yljf, ksjy, sbrq
+      )
+    values (#{ks,jdbcType=NCHAR}, #{sbry,jdbcType=NCHAR}, #{flag,jdbcType=NCHAR}, #{ylaqyh,jdbcType=NCHAR}, 
+      #{yljfyh,jdbcType=NCHAR}, #{yljf,jdbcType=NCHAR}, #{ksjy,jdbcType=NCHAR}, #{sbrq,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.Ylaqrb" >
+    insert into ylaqrb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ks != null" >
+        ks,
+      </if>
+      <if test="sbry != null" >
+        sbry,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="ylaqyh != null" >
+        ylaqyh,
+      </if>
+      <if test="yljfyh != null" >
+        yljfyh,
+      </if>
+      <if test="yljf != null" >
+        yljf,
+      </if>
+      <if test="ksjy != null" >
+        ksjy,
+      </if>
+      <if test="sbrq != null" >
+        sbrq,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ks != null" >
+        #{ks,jdbcType=NCHAR},
+      </if>
+      <if test="sbry != null" >
+        #{sbry,jdbcType=NCHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=NCHAR},
+      </if>
+      <if test="ylaqyh != null" >
+        #{ylaqyh,jdbcType=NCHAR},
+      </if>
+      <if test="yljfyh != null" >
+        #{yljfyh,jdbcType=NCHAR},
+      </if>
+      <if test="yljf != null" >
+        #{yljf,jdbcType=NCHAR},
+      </if>
+      <if test="ksjy != null" >
+        #{ksjy,jdbcType=NCHAR},
+      </if>
+      <if test="sbrq != null" >
+        #{sbrq,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <!-- 分页查询 -->
+  <select id="selectPager" parameterType="map" resultMap="BaseResultMap">
+  	SELECT
+		*
+	FROM
+		(
+			SELECT
+				*, ROW_NUMBER () OVER (ORDER BY sbrq  desc) AS RowId
+			FROM
+				ylaqrb t
+			where 1=1
+			<if test="bDate != null" >
+		        <![CDATA[and sbrq >= #{bDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="eDate != null" >
+		        <![CDATA[and sbrq <= #{eDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="sbry != null" >
+		        and sbry like '%'+#{sbry,jdbcType=NCHAR}+'%'
+		    </if>
+		    <if test="ks != null" >
+		        and ks like '%'+#{ks,jdbcType=NCHAR}+'%'
+		    </if>
+		) AS b
+	WHERE
+		b.RowId BETWEEN #{begRow,jdbcType=INTEGER} 
+	AND #{endRow,jdbcType=INTEGER} 
+  </select>
+  <select id="selectPagerCount" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+		count(1)
+	FROM
+		ylaqrb t
+	where 1=1
+	<if test="bDate != null" >
+		        <![CDATA[and sbrq >= #{bDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="eDate != null" >
+		        <![CDATA[and sbrq <= #{eDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="sbry != null" >
+		        and sbry like '%'+#{sbry,jdbcType=NCHAR}+'%'
+		    </if>
+		    <if test="ks != null" >
+		        and ks like '%'+#{ks,jdbcType=NCHAR}+'%'
+		    </if>
+  </select>
+</mapper>

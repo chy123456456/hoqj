@@ -1,0 +1,71 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据上报-医疗安全隐患、纠纷隐患及纠纷日报</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div><span style="float: right;line-height:100%"></span></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                	<!-- <span class="spacing"><label>科室：</label><input type="text" name="nick"/></span> -->
+                	<span class="spacing"><label>科室名称：</label><input type="text" name="ks"/></span>
+                    <span class="spacing"><label>上报医生：</label><input type="text" name="sbry"/></span>
+					<span class="spacing"><label>上报时间（从）：</label> 
+						<input class="easyui-datetimebox easyui-validatebox" id="bDate" name="bDate" value="${bDate!''}" style="width: 150px" /> 
+					</span> <span class="spacing"><label>上报时间（到）</label> 
+						<input class="easyui-datetimebox easyui-validatebox" id="eDate" name="eDate" value="${eDate!''}" style="width: 150px" /> </span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                </form>
+            </div>
+        </div>
+        <table id="grid" data-options="url:'medicalSafe/list',method:'post'" title="医疗安全事件列表">
+            <thead>
+            	<th data-options="field:'ks',width:30,resizable:true,align:'left'">科室</th>
+            	<th data-options="field:'sbry',width:30,resizable:true,align:'left'">报告人</th>
+            	<th data-options="field:'sbrq',width:30,resizable:true,align:'left'">上报时间</th>
+            	<th data-options="field:'flag',width:10,resizable:true,align:'left'">安全隐患</th>
+            	<th data-options="field:'ylaqyh',width:100,resizable:true,align:'left'">医疗安全隐患</th>
+            	<th data-options="field:'yljfyh',width:100,resizable:true,align:'left'">医疗纠纷隐患</th>
+            	<th data-options="field:'ksjy',width:40,resizable:true,align:'left'">科室处理及建议</th>
+            	<th data-options="field:'opt',width:40,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    <div class="hide-panel">
+        <div id="medicalSafeEditDialog" style="width:600px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="medicalSafeEditForm" action="" class="form_style" method="post" onsubmit="return false;">
+                <input type="hidden" id="sbflag" value="1">
+                <div class="form-field">
+                    <label for="ks">科室：<font color="red"></font></label>
+                    <input class="easyui-validatebox"  type="text" name="ks" id="ks" maxlength="30" value="<#if user.dept??>${user.dept.name}</#if>" />
+                    <label for="xm">报告人：<font color="red">*</font></label>
+                    <input class="easyui-validatebox"  type="text" name="sbry" id="sbry" maxlength="30" value="${user.name}" />
+                </div>
+                <div class="form-field">
+                	<label for="sbrq">上报时间：<font color="red">*</font></label>
+                    <input class="easyui-validatebox"  type="text" name="sbrq" id="sbrq" maxlength="30"  value="${date}"/>
+                    <label for="flag">安全隐患：<font color="red"></font></label>
+                    <input type="radio"  name="flag" value="无" checked><span class="check-label">安全</span>&nbsp;&nbsp;&nbsp;<input type="radio" name="flag" value="有"><span class="check-label">有隐患</span>
+                </div>
+                <div class="form-field">
+                	<label for="zyzd">医疗安全隐患：<font color="red">*</font></label>
+                    <textarea class="easyui-validatebox" name="ylaqyh" id="ylaqyh" maxlength="200" style="margin: 0px; width: 385px; height: 42px;">安全</textarea>
+                </div>
+                <div class="form-field">
+                    <label for="mqqk">医疗纠纷隐患：<font color="red">*</font></label>
+                    <textarea class="easyui-validatebox"  name="yljfyh" id="yljfyh" maxlength="200" style="margin: 0px; width: 385px; height: 42px;">安全</textarea>
+                </div>
+                <div class="form-field">
+                	<label for="zyzd">科室处理及建议：<font color="red">*</font></label>
+                    <textarea class="easyui-validatebox" name="ksjy" id="ksjy" maxlength="200" style="margin: 0px; width: 385px; height: 42px;">无</textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>

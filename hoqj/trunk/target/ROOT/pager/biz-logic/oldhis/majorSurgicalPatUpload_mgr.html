@@ -1,0 +1,78 @@
+<@compress single_line=isCompress>
+<!DOCTYPE html>
+<html>
+<head>
+<title>数据上报-重大手术患者日报</title>
+<#include "/pager/common/quote.html" />
+</head>
+<body>
+    <div class="body-center">
+        <div class="html-panel query-panel" id="query_con">
+            <div class="panel-header"><div class="panel-title">查询条件</div><span style="float: right;line-height:100%"></span></div>
+            <div class="panel-content" id="menuMgrPanel">
+                <form onsubmit="return false;" id="queryForm" class="form_style">
+                	<!-- <span class="spacing"><label>科室：</label><input type="text" name="nick"/></span> -->
+                	<span class="spacing"><label>科室名称：</label><input type="text" name="deptName"/></span>
+                    <span class="spacing"><label>上报医生：</label><input type="text" name="docName"/></span>
+                    <span class="spacing"><label>住院号：</label><input type="text" name="zyh"/></span>
+                    <span class="spacing"><label>患者姓名：</label><input type="text" name="xm"/></span>
+					<span class="spacing"><label>上报时间（从）：</label> 
+						<input class="easyui-datetimebox easyui-validatebox" id="bDate" name="bDate" value="${bDate!''}" style="width: 150px" /> 
+					</span> <span class="spacing"><label>上报时间（到）</label> 
+						<input class="easyui-datetimebox easyui-validatebox" id="eDate" name="eDate" value="${eDate!''}" style="width: 150px" /> </span>
+                    <span class="spacing"><input type="submit" id="queryButton" value="查询"/></span>
+                </form>
+            </div>
+        </div>
+        <table id="grid" data-options="url:'majorSurgicalPatUpload/list',method:'post'" title="重大手术患者列表">
+            <thead>
+            	<th data-options="field:'zyh',width:30,resizable:true,align:'left'">住院号</th>
+            	<th data-options="field:'ks',width:30,resizable:true,align:'left'">科室</th>
+            	<th data-options="field:'xm',width:30,resizable:true,align:'left'">姓名</th>
+            	<th data-options="field:'xb',width:10,resizable:true,align:'left'">性别</th>
+            	<th data-options="field:'nl',width:10,resizable:true,align:'left'">年龄</th>
+            	<th data-options="field:'nldw',width:15,resizable:true,align:'left'">年龄单位</th>
+            	<th data-options="field:'ryrq',width:40,resizable:true,align:'left'">入院日期</th>
+            	<th data-options="field:'zyzd',width:80,resizable:true,align:'left'">主要诊断</th>
+            	<th data-options="field:'ssmc',width:80,resizable:true,align:'left'">手术名称</th>
+            	<th data-options="field:'sbr',width:30,resizable:true,align:'left'">上报人</th>
+            	<th data-options="field:'sbsj',width:40,resizable:true,align:'left'">上报时间</th>
+            	<th data-options="field:'opt',width:50,resizable:true,align:'left',formatter:formatter.opt">操作</th>
+            </thead>
+        </table>
+    </div>
+    <div class="hide-panel">
+        <div id="majorSurgicalPatUploadEditDialog" style="width:600px;height:350px;" data-options="resizable:false,modal:true,closed: true">
+            <form id="majorSurgicalPatUploadEditForm" action="" class="form_style" method="post" onsubmit="return false;">
+                <input type="hidden" name="sbflag" id="sbflag" value="1"/>
+                <div class="form-field">
+                    <label for="zyh">住院号：<font color="red"></font></label>
+                    <input class="easyui-validatebox"  type="text" name="zyh" id="zyh" maxlength="30"  />
+                    <label for="xm">患者姓名：<font color="red">*</font></label>
+                    <input class="easyui-validatebox"  type="text" name="xm" id="xm" maxlength="30"  />
+                </div>
+                <div class="form-field">
+                	<label for="xm">性别：<font color="red">*</font></label>
+                    <input class="easyui-validatebox"  type="text" name="xb" id="xb" maxlength="30"  />
+                    <label for="ks">科室：<font color="red"></font></label>
+                    <input class="easyui-validatebox"  type="text" name="ks" id="ks" maxlength="30"  />
+                    
+                </div>
+                <div class="form-field">
+                	<label for="ryrq">入院日期：<font color="red">*</font></label>
+                    <input class="easyui-validatebox"  type="text" name="ryrq" id="ryrq" maxlength="30"  />
+                    <label for="nl">年龄：<font color="red"></font></label>
+                    <input class="easyui-validatebox"  type="text" name="nl" id="nl" maxlength="30"  />
+                </div>
+                <div class="form-field">
+                	<label for="zyzd">主要诊断：<font color="red">*</font></label>
+                    <textarea class="easyui-validatebox" name="zyzd" id="zyzd" maxlength="50" style="margin: 0px; width: 145px; height: 42px;"></textarea>
+                    <label for="mqqk">手术名称：<font color="red">*</font></label>
+                    <textarea class="easyui-validatebox"  name="ssmc" id="ssmc" maxlength="50" style="margin: 0px; width: 145px; height: 42px;"></textarea>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+</@compress>

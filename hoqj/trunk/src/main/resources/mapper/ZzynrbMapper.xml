@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.keng.main.mapper.ZzynrbMapper" >
+  <resultMap id="BaseResultMap" type="com.keng.main.entity.Zzynrb" >
+    <id column="zyh" property="zyh" jdbcType="NCHAR" />
+    <result column="ks" property="ks" jdbcType="NCHAR" />
+    <result column="xm" property="xm" jdbcType="NCHAR" />
+    <result column="xb" property="xb" jdbcType="NCHAR" />
+    <result column="nl" property="nl" jdbcType="REAL" />
+    <result column="nldw" property="nldw" jdbcType="NCHAR" />
+    <result column="ryrq" property="ryrq" jdbcType="TIMESTAMP" />
+    <result column="zyzd" property="zyzd" jdbcType="NCHAR" />
+    <result column="mqqk" property="mqqk" jdbcType="NVARCHAR" />
+    <result column="sbr" property="sbr" jdbcType="NCHAR" />
+    <result column="sbsj" property="sbsj" jdbcType="TIMESTAMP" />
+    <result column="bz1" property="bz1" jdbcType="NCHAR" />
+    <result column="bz2" property="bz2" jdbcType="NCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    zyh, ks, xm, xb, nl, nldw, ryrq, zyzd, mqqk, sbr, sbsj, bz1, bz2
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from zzynrb
+    where zyh = #{zyh,jdbcType=NCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from zzynrb
+    where zyh = #{zyh,jdbcType=NCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.keng.main.entity.Zzynrb" >
+    insert into zzynrb (zyh, ks, xm, xb, 
+      nl, nldw, ryrq, zyzd, 
+      mqqk, sbr, sbsj, bz1, 
+      bz2)
+    values (#{zyh,jdbcType=NCHAR}, #{ks,jdbcType=NCHAR}, #{xm,jdbcType=NCHAR}, #{xb,jdbcType=NCHAR}, 
+      #{nl,jdbcType=REAL}, #{nldw,jdbcType=NCHAR}, #{ryrq,jdbcType=TIMESTAMP}, #{zyzd,jdbcType=NCHAR}, 
+      #{mqqk,jdbcType=NVARCHAR}, #{sbr,jdbcType=NCHAR}, #{sbsj,jdbcType=TIMESTAMP}, #{bz1,jdbcType=NCHAR}, 
+      #{bz2,jdbcType=NCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.keng.main.entity.Zzynrb" >
+    insert into zzynrb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="zyh != null" >
+        zyh,
+      </if>
+      <if test="ks != null" >
+        ks,
+      </if>
+      <if test="xm != null" >
+        xm,
+      </if>
+      <if test="xb != null" >
+        xb,
+      </if>
+      <if test="nl != null" >
+        nl,
+      </if>
+      <if test="nldw != null" >
+        nldw,
+      </if>
+      <if test="ryrq != null" >
+        ryrq,
+      </if>
+      <if test="zyzd != null" >
+        zyzd,
+      </if>
+      <if test="mqqk != null" >
+        mqqk,
+      </if>
+      <if test="sbr != null" >
+        sbr,
+      </if>
+      <if test="sbsj != null" >
+        sbsj,
+      </if>
+      <if test="bz1 != null" >
+        bz1,
+      </if>
+      <if test="bz2 != null" >
+        bz2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="zyh != null" >
+        #{zyh,jdbcType=NCHAR},
+      </if>
+      <if test="ks != null" >
+        #{ks,jdbcType=NCHAR},
+      </if>
+      <if test="xm != null" >
+        #{xm,jdbcType=NCHAR},
+      </if>
+      <if test="xb != null" >
+        #{xb,jdbcType=NCHAR},
+      </if>
+      <if test="nl != null" >
+        #{nl,jdbcType=REAL},
+      </if>
+      <if test="nldw != null" >
+        #{nldw,jdbcType=NCHAR},
+      </if>
+      <if test="ryrq != null" >
+        #{ryrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zyzd != null" >
+        #{zyzd,jdbcType=NCHAR},
+      </if>
+      <if test="mqqk != null" >
+        #{mqqk,jdbcType=NVARCHAR},
+      </if>
+      <if test="sbr != null" >
+        #{sbr,jdbcType=NCHAR},
+      </if>
+      <if test="sbsj != null" >
+        #{sbsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bz1 != null" >
+        #{bz1,jdbcType=NCHAR},
+      </if>
+      <if test="bz2 != null" >
+        #{bz2,jdbcType=NCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.keng.main.entity.Zzynrb" >
+    update zzynrb
+    <set >
+      <if test="ks != null" >
+        ks = #{ks,jdbcType=NCHAR},
+      </if>
+      <if test="xm != null" >
+        xm = #{xm,jdbcType=NCHAR},
+      </if>
+      <if test="xb != null" >
+        xb = #{xb,jdbcType=NCHAR},
+      </if>
+      <if test="nl != null" >
+        nl = #{nl,jdbcType=REAL},
+      </if>
+      <if test="nldw != null" >
+        nldw = #{nldw,jdbcType=NCHAR},
+      </if>
+      <if test="ryrq != null" >
+        ryrq = #{ryrq,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zyzd != null" >
+        zyzd = #{zyzd,jdbcType=NCHAR},
+      </if>
+      <if test="mqqk != null" >
+        mqqk = #{mqqk,jdbcType=NVARCHAR},
+      </if>
+      <if test="sbr != null" >
+        sbr = #{sbr,jdbcType=NCHAR},
+      </if>
+      <if test="sbsj != null" >
+        sbsj = #{sbsj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bz1 != null" >
+        bz1 = #{bz1,jdbcType=NCHAR},
+      </if>
+      <if test="bz2 != null" >
+        bz2 = #{bz2,jdbcType=NCHAR},
+      </if>
+    </set>
+    where zyh = #{zyh,jdbcType=NCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.keng.main.entity.Zzynrb" >
+    update zzynrb
+    set ks = #{ks,jdbcType=NCHAR},
+      xm = #{xm,jdbcType=NCHAR},
+      xb = #{xb,jdbcType=NCHAR},
+      nl = #{nl,jdbcType=REAL},
+      nldw = #{nldw,jdbcType=NCHAR},
+      ryrq = #{ryrq,jdbcType=TIMESTAMP},
+      zyzd = #{zyzd,jdbcType=NCHAR},
+      mqqk = #{mqqk,jdbcType=NVARCHAR},
+      sbr = #{sbr,jdbcType=NCHAR},
+      sbsj = #{sbsj,jdbcType=TIMESTAMP},
+      bz1 = #{bz1,jdbcType=NCHAR},
+      bz2 = #{bz2,jdbcType=NCHAR}
+    where zyh = #{zyh,jdbcType=NCHAR}
+  </update>
+  <!-- 分页查询 -->
+  <select id="selectPager" parameterType="map" resultMap="BaseResultMap">
+  	SELECT
+		*
+	FROM
+		(
+			SELECT
+				*, ROW_NUMBER () OVER (ORDER BY sbsj desc) AS RowId
+			FROM
+				zzynrb t
+			where 1=1
+			<if test="bDate != null" >
+		        <![CDATA[and sbsj >= #{bDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="eDate != null" >
+		        <![CDATA[and sbsj <= #{eDate,jdbcType=TIMESTAMP}]]>
+		    </if>
+		    <if test="deptName != null" >
+		        and ks like '%'+#{deptName,jdbcType=NCHAR}+'%'
+		    </if>
+		    <if test="docName != null" >
+		        and sbr like '%'+#{docName,jdbcType=NCHAR}+'%'
+		    </if>
+		    <if test="zyh != null" >
+		        and zyh like '%'+#{zyh,jdbcType=NCHAR}+'%'
+		    </if>
+		    <if test="xm != null" >
+		        and xm like '%'+#{xm,jdbcType=NCHAR}+'%'
+		    </if>
+		) AS b
+	WHERE
+		b.RowId BETWEEN #{begRow,jdbcType=INTEGER} 
+	AND #{endRow,jdbcType=INTEGER} 
+  </select>
+  <select id="selectPagerCount" parameterType="map" resultType="java.lang.Integer">
+	SELECT
+		count(1)
+	FROM
+		zzynrb t
+	where 1=1
+	<if test="bDate != null" >
+	       <![CDATA[and sbsj >= #{bDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="eDate != null" >
+	    <![CDATA[and sbsj <= #{eDate,jdbcType=TIMESTAMP}]]>
+	</if>
+	<if test="deptName != null" >
+	    and ks like '%'+#{deptName,jdbcType=NCHAR}+'%'
+	</if>
+	<if test="docName != null" >
+	    and sbr like '%'+#{docName,jdbcType=NCHAR}+'%'
+	</if>
+	<if test="zyh != null" >
+        and zyh like '%'+#{zyh,jdbcType=NCHAR}+'%'
+    </if>
+    <if test="xm != null" >
+        and xm like '%'+#{xm,jdbcType=NCHAR}+'%'
+    </if>
+  </select>
+</mapper>
